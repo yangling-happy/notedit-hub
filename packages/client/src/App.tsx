@@ -1,35 +1,22 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React from "react";
 
-function App() {
-  const [count, setCount] = useState(0)
+import { Splitter } from "antd";
+import { Sidebar } from "./components/Sidebar";
+import { Editor } from "./components/Editor";
+import { Toolbar } from "./components/Toolbar";
 
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+const App: React.FC = () => (
+  <div style={{ display: "flex", flexDirection: "column", height: "100vh" }}>
+    <Toolbar />
+    <Splitter style={{ flex: 1 }}>
+      <Splitter.Panel collapsible ={{start: true, end: true, showCollapsibleIcon: true}} min="20%" defaultSize="30%">
+        <Sidebar />
+      </Splitter.Panel>
+      <Splitter.Panel>
+        <Editor />
+      </Splitter.Panel>
+    </Splitter>
+  </div>
+);
 
-export default App
+export default App;

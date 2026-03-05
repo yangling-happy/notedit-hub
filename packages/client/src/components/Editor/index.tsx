@@ -1,0 +1,1 @@
+export const Editor = () => <div style={{ padding: 20, backgroundColor: '#ffffff', height: '100%' }}>这是编辑器区域（待开发）</div>;
