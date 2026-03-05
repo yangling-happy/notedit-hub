@@ -1,0 +1,7 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+echo "Running pre-commit hook: Building the project..."
+
+# 执行 pnpm 根目录的 build 命令
+pnpm run build

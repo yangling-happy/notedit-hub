@@ -1,0 +1,21 @@
+{
+  "name": "notedit",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "dev:client": "pnpm -- filter client dev",
+    "dev:server": "pnpm -- filter server dev",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky",
+    "build": "pnpm -r run build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.28.2",
+  "devDependencies": {
+    "husky": "^9.1.7"
+  }
+}
