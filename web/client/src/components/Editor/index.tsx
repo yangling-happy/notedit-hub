@@ -1,4 +1,4 @@
-import React from "react";
+// import React from "react";
 
 import { useCreateBlockNote } from "@blocknote/react";
 // Or, you can use ariakit, shadcn, etc.
