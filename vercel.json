@@ -1,6 +1,7 @@
 {
   "buildCommand": "pnpm run build",
-  "outputDirectory": "web/client/dist",
+"rootDirectory": "web/client",
+  "outputDirectory": "dist",
   "devCommand": "pnpm run dev",
   "installCommand": "pnpm install"
 }
