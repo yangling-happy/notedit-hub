@@ -2,7 +2,7 @@ import React from "react";
 
 import { Splitter } from "antd";
 import { Sidebar } from "./components/Sidebar";
-import { Editor } from "./components/Editor";
+import Editor from "./components/Editor";
 import { Toolbar } from "./components/Toolbar";
 
 const App: React.FC = () => (
