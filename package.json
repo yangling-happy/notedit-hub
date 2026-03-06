@@ -5,8 +5,8 @@
   "main": "index.js",
   "private": true,
   "scripts": {
-    "dev:client": "pnpm -- filter client dev",
-    "dev:server": "pnpm -- filter server dev",
+    "dev:client": "pnpm run build",
+    "dev:server": "pnpm run build",
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepare": "husky",
     "build": "pnpm -r run build"
