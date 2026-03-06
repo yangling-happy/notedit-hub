@@ -12,6 +12,5 @@ export default function Editor() {
   // Create a new editor instance
   const editor = useCreateBlockNote();
 
-  // Render the editor
   return <BlockNoteView editor={editor} />;
 }
