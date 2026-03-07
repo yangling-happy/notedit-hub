@@ -1,7 +1,7 @@
 import React from "react";
 
 import { Splitter } from "antd";
-import { Sidebar } from "./components/Sidebar";
+import Sidebar from "./components/Sidebar";
 import Editor from "./components/Editor";
 import { Toolbar } from "./components/Toolbar";
 import "./styles/global.css";
@@ -22,7 +22,6 @@ const App: React.FC = () => (
       </Splitter.Panel>
       <Splitter.Panel
         className="main-content"
-        collapsible={{ showCollapsibleIcon: false }}
         min="20%"
         defaultSize="80%"
       >
