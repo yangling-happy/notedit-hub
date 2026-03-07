@@ -16,6 +16,9 @@ export const Toolbar = () => (
       backgroundColor: "#ffffff",
       borderBottom: "1px solid #e8e8e8",
       height: "48px",
+      position: "sticky",
+      top: "0px",
+      zIndex: 2,
     }}
   >
     <Space>
