@@ -5,9 +5,8 @@ import { Outline } from "./outLine";
 interface SidebarProps {
   editor: any;
 }
-
 const Sidebar: React.FC<SidebarProps> = ({ editor }) => {
-  const [activeTab, setActiveTab] = useState("文件");
+  const [activeTab, setActiveTab] = useState(localStorage.getItem("activeTab") || "文件")
   return (
     <div>
       <div>
@@ -15,7 +14,10 @@ const Sidebar: React.FC<SidebarProps> = ({ editor }) => {
           options={["文件", "大纲"]}
           block
           value={activeTab}
-          onChange={(value) => setActiveTab(value as string)}
+          onChange={(value) => {
+            setActiveTab(value as string);
+            localStorage.setItem("activeTab", value as string);
+          }}
         />
       </div>
       <div className="sidebar-scrollable">
