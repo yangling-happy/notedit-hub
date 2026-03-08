@@ -7,15 +7,14 @@ export function useEditorStorage(id: string) {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // 1. 初始化时加载数据
   useEffect(() => {
-    let active = true; // 避免组件卸载后更新状态
+    let active = true;
     const fetchData = async () => {
       setIsLoading(true);
       try {
         const res = await dbService.get(id);
         if (active) {
-          setData((res as Note) || null); // 没有数据时设为 null
+          setData((res as Note) || null);
           setIsLoading(false);
         }
       } catch (err) {
@@ -31,16 +30,13 @@ export function useEditorStorage(id: string) {
     };
   }, [id]);
 
-  // 2. 保存数据的封装
   const save = async (note: Note) => {
     setIsLoading(true);
     try {
       await dbService.save(note);
-      setData(note);
     } catch (err) {
       setError("保存数据失败");
-    } finally {
-      setIsLoading(false);
+      throw err;
     }
   };
 

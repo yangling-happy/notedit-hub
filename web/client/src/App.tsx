@@ -6,8 +6,17 @@ import { Toolbar } from "./components/Toolbar";
 import "./styles/global.css";
 import { useCreateBlockNote } from "@blocknote/react";
 import { zh } from "@blocknote/core/locales";
+import { useEditorStorage } from "./hooks/useEditorStorage";
+import { useEffect } from "react";
 const App: React.FC = () => {
   const editor = useCreateBlockNote({ dictionary: zh });
+  const docId = "default-note-id";
+  const { data, isLoading, save } = useEditorStorage(docId);
+  useEffect(() => {
+    if (editor && data && !isLoading) {
+      editor.replaceBlocks(editor.document, data.content);
+    }
+  }, [editor, data, isLoading]);
   return (
     <div className="fixed-viewport">
       <Toolbar />
@@ -27,7 +36,7 @@ const App: React.FC = () => {
             className="main-content-scrollable"
             style={{ padding: "15px 20px" }}
           >
-            <Editor editor={editor} />
+            <Editor editor={editor} onSave={save} noteId={docId} />
           </div>
         </Splitter.Panel>
       </Splitter>
