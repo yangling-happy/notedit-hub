@@ -1,4 +1,3 @@
-import { Empty } from "antd";
 import { useOutline } from "../../hooks/use-outline";
 import type { Block, BlockNoteEditor } from "@blocknote/core";
 
@@ -10,11 +9,7 @@ export const Outline: React.FC<OutlineProps> = ({ editor }: OutlineProps) => {
   const headings = useOutline(editor);
 
   if (!headings || headings.length === 0) {
-    return (
-      <div style={{ marginTop: 40 }}>
-        <Empty description="暂无大纲" />
-      </div>
-    );
+    return <div></div>;
   }
   const handleJump = (block: Block) => {
     const element = document.querySelector(`[data-id="${block.id}"]`);
