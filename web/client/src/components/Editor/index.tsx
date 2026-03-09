@@ -21,10 +21,5 @@ export default function Editor({ editor, onSave, noteId }: EditorProps) {
     }
   }, [onSave, noteId, editor.document]);
 
-  return (
-    <BlockNoteView
-      editor={editor}
-      onChange={handleSave}
-    />
-  );
+  return <BlockNoteView editor={editor} onChange={handleSave} />;
 }
