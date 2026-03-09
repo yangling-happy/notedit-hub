@@ -9,7 +9,20 @@ import { zh } from "@blocknote/core/locales";
 import { useEditorStorage } from "./hooks/useEditorStorage";
 import { useEffect } from "react";
 const App: React.FC = () => {
-  const editor = useCreateBlockNote({ dictionary: zh });
+  // 以后换成自己的云存储，临时文件1小时后会过期
+  async function uploadFile(file: File) {
+    const body = new FormData();
+    body.append("file", file);
+    const ret = await fetch("https://tmpfiles.org/api/v1/upload", {
+      method: "POST",
+      body: body,
+    });
+    return (await ret.json()).data.url.replace(
+      "tmpfiles.org/",
+      "tmpfiles.org/dl/",
+    );
+  }
+  const editor = useCreateBlockNote({ dictionary: zh, uploadFile });
   const docId = "default-note-id";
   const { data, isLoading, save } = useEditorStorage(docId);
   useEffect(() => {
