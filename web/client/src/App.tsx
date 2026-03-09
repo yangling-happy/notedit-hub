@@ -32,7 +32,7 @@ const App: React.FC = () => {
   }, [editor, data, isLoading]);
   return (
     <div className="fixed-viewport">
-      <Toolbar />
+      <Toolbar editor={editor}/>
       <Splitter
         style={{ flex: 1, height: "calc(100% - 48px)", overflow: "hidden" }}
       >

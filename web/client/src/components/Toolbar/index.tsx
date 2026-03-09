@@ -1,7 +1,7 @@
 import File from "./file";
 import { GithubOutlined } from "@ant-design/icons";
-
-export const Toolbar = () => (
+import { BlockNoteEditor } from "@blocknote/core";
+export const Toolbar = ({ editor }: { editor: BlockNoteEditor }) => (
   <div
     style={{
       display: "flex",
@@ -17,7 +17,7 @@ export const Toolbar = () => (
     }}
   >
     <div>
-      <File />
+      <File editor={editor}/>
     </div>
     <div style={{ fontWeight: 600, fontSize: 16, color: "black" }}>NOTEDIT</div>
     <a href="https://github.com/yangling-happy/notedit-hub" target="_blank" rel="noopener noreferrer" style={{

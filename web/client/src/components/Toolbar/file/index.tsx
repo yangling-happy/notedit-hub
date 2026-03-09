@@ -3,6 +3,9 @@ import React from "react";
 import { FolderOutlined, CaretDownOutlined } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { Dropdown, Space } from "antd";
+import useFileExport from "../../../hooks/useFileExport";
+import type { BlockNoteEditor } from "@blocknote/core";
+
 
 const items: MenuProps["items"] = [
   {
@@ -13,8 +16,8 @@ const items: MenuProps["items"] = [
     key: "2",
     label: "新建窗口",
   },
-   {
-    type: 'divider',
+  {
+    type: "divider",
   },
   {
     key: "3",
@@ -30,8 +33,8 @@ const items: MenuProps["items"] = [
       },
     ],
   },
-   {
-    type: 'divider',
+  {
+    type: "divider",
   },
   {
     key: "4",
@@ -41,8 +44,8 @@ const items: MenuProps["items"] = [
     key: "5",
     label: "另存为",
   },
-   {
-    type: 'divider',
+  {
+    type: "divider",
   },
   {
     key: "6",
@@ -54,30 +57,48 @@ const items: MenuProps["items"] = [
     children: [
       {
         key: "7-1",
-        label: "Markdown",
+        label: "DOCX",
       },
       {
         key: "7-2",
-        label: "Word",
+        label: "PDF",
       },
       {
         key: "7-3",
-        label: "PDF",
+        label: "ODT",
+      },
+      {
+        key: "7-4",
+        label: "Email Export",
+      },
+      {
+        key: "7-5",
+        label: "Markdown",
       },
     ],
   },
 ];
+const File: React.FC<{ editor: BlockNoteEditor }> = ({ editor }) => {
+  const { exportMarkdown } = useFileExport(editor); 
 
-const File: React.FC = () => (
-  <Dropdown menu={{ items }}>
-    <a onClick={(e) => e.preventDefault()}>
-      <Space>
-        <FolderOutlined />
-        文件
-        <CaretDownOutlined />
-      </Space>
-    </a>
-  </Dropdown>
-);
+  const onMenuClick: MenuProps["onClick"] = ({ key }) => {
+    if (key === "7-5") {
+      exportMarkdown();
+    }
+    // 其他 key 的事件处理可以在这里添加
+  };
+
+  return (
+    <Dropdown menu={{ items, onClick: onMenuClick }}>
+      <a onClick={(e) => e.preventDefault()}>
+        <Space>
+          <FolderOutlined />
+          文件
+          <CaretDownOutlined />
+        </Space>
+      </a>
+    </Dropdown>
+  );
+};
 
 export default File;
