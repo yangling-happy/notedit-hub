@@ -6,7 +6,6 @@ import { Dropdown, Space } from "antd";
 import useFileExport from "../../../hooks/useFileExport";
 import type { BlockNoteEditor } from "@blocknote/core";
 
-
 const items: MenuProps["items"] = [
   {
     key: "1",
@@ -65,27 +64,19 @@ const items: MenuProps["items"] = [
       },
       {
         key: "7-3",
-        label: "ODT",
-      },
-      {
-        key: "7-4",
-        label: "Email Export",
-      },
-      {
-        key: "7-5",
         label: "Markdown",
       },
     ],
   },
 ];
 const File: React.FC<{ editor: BlockNoteEditor }> = ({ editor }) => {
-  const { exportMarkdown } = useFileExport(editor); 
+
+  const { exportFile } = useFileExport(editor);
 
   const onMenuClick: MenuProps["onClick"] = ({ key }) => {
-    if (key === "7-5") {
-      exportMarkdown();
+    if (key.startsWith("7-")) {
+      exportFile(key);
     }
-    // 其他 key 的事件处理可以在这里添加
   };
 
   return (
