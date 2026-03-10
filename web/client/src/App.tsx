@@ -23,6 +23,7 @@ const App: React.FC = () => {
     );
   }
   const editor = useCreateBlockNote({ dictionary: zh, uploadFile });
+  editor.focus();
   const docId = "default-note-id";
   const { data, isLoading, save } = useEditorStorage(docId);
   useEffect(() => {
