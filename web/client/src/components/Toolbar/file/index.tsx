@@ -77,6 +77,9 @@ const File: React.FC<{ editor: BlockNoteEditor }> = ({ editor }) => {
     if (key.startsWith("7-")) {
       exportFile(key);
     }
+    if(key === "2"){
+      window.open(window.location.origin, "_blank");
+    }
   };
 
   return (
