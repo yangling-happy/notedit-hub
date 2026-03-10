@@ -1,10 +1,9 @@
-import {
-  PDFExporter,
-  pdfDefaultSchemaMappings,
-} from "@blocknote/xl-pdf-exporter";
-import * as ReactPDF from "@react-pdf/renderer";
-
 export const exportToPdf = async (editor: any): Promise<Blob> => {
+  const [{ PDFExporter, pdfDefaultSchemaMappings }, { default: ReactPDF }] =
+    await Promise.all([
+      import("@blocknote/xl-pdf-exporter"),
+      import("@react-pdf/renderer"),
+    ]);
   const exporter = new PDFExporter(
     editor.schema,
     pdfDefaultSchemaMappings as any,

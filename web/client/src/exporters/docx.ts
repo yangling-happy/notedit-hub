@@ -1,9 +1,13 @@
-import {
-  DOCXExporter,
-  docxDefaultSchemaMappings,
-} from "@blocknote/xl-docx-exporter";
-import { Packer } from "docx";
+// import {
+//   DOCXExporter,
+//   docxDefaultSchemaMappings,
+// } from "@blocknote/xl-docx-exporter";
+// import { Packer } from "docx";
 export const exportToDocx = async (editor: any): Promise<Blob> => {
+  const [{ DOCXExporter, docxDefaultSchemaMappings }, { Packer }] = await Promise.all([
+    import("@blocknote/xl-docx-exporter"),
+    import("docx"),
+  ]);
   const exporter = new DOCXExporter(
     editor.schema,
     docxDefaultSchemaMappings as any,
