@@ -2,9 +2,10 @@ import React from "react";
 
 import { FolderOutlined, CaretDownOutlined } from "@ant-design/icons";
 import type { MenuProps } from "antd";
-import { Dropdown, Space } from "antd";
+import { Dropdown, Space , Modal} from "antd";
 import useFileExport from "../../../hooks/useFileExport";
 import type { BlockNoteEditor } from "@blocknote/core";
+import  {clearEditor}  from "../../../utils/clearEditor";
 
 const items: MenuProps["items"] = [
   {
@@ -77,9 +78,20 @@ const File: React.FC<{ editor: BlockNoteEditor }> = ({ editor }) => {
     if (key.startsWith("7-")) {
       exportFile(key);
     }
+ if (key === "1") {
+      Modal.confirm({
+        title: '新建文档会清空当前编辑，请确认您已导出或已有备份，是否继续？',
+        okText: '确认',
+        cancelText: '取消',
+        onOk: () => {
+          clearEditor(editor);
+        },
+      });
+    }
     if(key === "2"){
       window.open(window.location.origin, "_blank");
     }
+    
   };
 
   return (
