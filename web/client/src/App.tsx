@@ -43,15 +43,25 @@ const App: React.FC = () => {
           <Splitter.Panel
             className="sidebar-container sidebar-trigger"
             style={{ overflow: "hidden" }}
+            collapsible={{ start: true, end: true }}
           >
             <div className="sidebar-hidden sidebar-scrollable">
               <Sidebar editor={editor} />
             </div>
           </Splitter.Panel>
-          <Splitter.Panel className="main-content" min="20%" defaultSize="80%" style={{ display: "flex", flexDirection: "column", overflow: "hidden" }}>
+          <Splitter.Panel
+            className="main-content"
+            min="20%"
+            defaultSize="80%"
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              overflow: "hidden",
+            }}
+          >
             <div
               className="main-content-scrollable"
-              style={{ padding: "15px 20px" , flex: 1, overflow: "auto"}}
+              style={{ padding: "15px 20px", flex: 1, overflow: "auto" }}
             >
               <Editor editor={editor} onSave={save} noteId={docId} />
             </div>
