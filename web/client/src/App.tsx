@@ -3,6 +3,7 @@ import { Splitter } from "antd";
 import Sidebar from "./components/Sidebar";
 import Editor from "./components/Editor";
 import { Toolbar } from "./components/Toolbar";
+import { Footbar } from "./components/Footbar";
 import "./styles/global.css";
 import { useCreateBlockNote } from "@blocknote/react";
 import { zh } from "@blocknote/core/locales";
@@ -47,13 +48,14 @@ const App: React.FC = () => {
               <Sidebar editor={editor} />
             </div>
           </Splitter.Panel>
-          <Splitter.Panel className="main-content" min="20%" defaultSize="80%">
+          <Splitter.Panel className="main-content" min="20%" defaultSize="80%" style={{ display: "flex", flexDirection: "column", overflow: "hidden" }}>
             <div
               className="main-content-scrollable"
-              style={{ padding: "15px 20px" }}
+              style={{ padding: "15px 20px" , flex: 1, overflow: "auto"}}
             >
               <Editor editor={editor} onSave={save} noteId={docId} />
             </div>
+            <Footbar editor={editor} />
           </Splitter.Panel>
         </Splitter>
       </div>
