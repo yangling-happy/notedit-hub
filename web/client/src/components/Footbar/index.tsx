@@ -1,7 +1,7 @@
 import { BlockNoteEditor } from "@blocknote/core";
-import React from "react";
 
-export const Footbar = ({ editor }: { editor: BlockNoteEditor }) => {
+
+export const Footbar = ({ }: { editor: BlockNoteEditor }) => {
   return (
     <div
       style={{
