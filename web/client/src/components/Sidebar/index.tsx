@@ -6,9 +6,17 @@ interface SidebarProps {
   editor: any;
 }
 const Sidebar: React.FC<SidebarProps> = ({ editor }) => {
-  const [activeTab, setActiveTab] = useState(localStorage.getItem("activeTab") || "文件")
+  const [activeTab, setActiveTab] = useState(
+    localStorage.getItem("activeTab") || "文件",
+  );
   return (
-    <div>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        height: "100%", 
+      }}
+    >
       <div>
         <Segmented
           options={["文件", "大纲"]}
