@@ -1,4 +1,4 @@
-import { useOutline } from "../../hooks/use-outline";
+import { useOutline } from "../../hooks/useOutline";
 import type { Block, BlockNoteEditor } from "@blocknote/core";
 
 interface OutlineProps {
