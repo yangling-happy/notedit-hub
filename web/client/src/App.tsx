@@ -8,6 +8,7 @@ import { useCreateBlockNote } from "@blocknote/react";
 import { zh } from "@blocknote/core/locales";
 import { useEditorStorage } from "./hooks/useEditorStorage";
 import { useEffect } from "react";
+import { ThemeBridge } from "./components/themeBridge";
 const App: React.FC = () => {
   // 以后换成自己的云存储，临时文件1小时后会过期
   async function uploadFile(file: File) {
@@ -32,29 +33,31 @@ const App: React.FC = () => {
     }
   }, [editor, data, isLoading]);
   return (
-    <div className="fixed-viewport">
-      <Toolbar editor={editor}/>
-      <Splitter
-        style={{ flex: 1, height: "calc(100% - 48px)", overflow: "hidden" }}
-      >
-        <Splitter.Panel
-          className="sidebar-container sidebar-trigger"
-          style={{ overflow: "hidden" }}
+    <ThemeBridge>
+      <div className="fixed-viewport">
+        <Toolbar editor={editor} />
+        <Splitter
+          style={{ flex: 1, height: "calc(100% - 48px)", overflow: "hidden" }}
         >
-          <div className="sidebar-hidden sidebar-scrollable">
-            <Sidebar editor={editor} />
-          </div>
-        </Splitter.Panel>
-        <Splitter.Panel className="main-content" min="20%" defaultSize="80%">
-          <div
-            className="main-content-scrollable"
-            style={{ padding: "15px 20px" }}
+          <Splitter.Panel
+            className="sidebar-container sidebar-trigger"
+            style={{ overflow: "hidden" }}
           >
-            <Editor editor={editor} onSave={save} noteId={docId} />
-          </div>
-        </Splitter.Panel>
-      </Splitter>
-    </div>
+            <div className="sidebar-hidden sidebar-scrollable">
+              <Sidebar editor={editor} />
+            </div>
+          </Splitter.Panel>
+          <Splitter.Panel className="main-content" min="20%" defaultSize="80%">
+            <div
+              className="main-content-scrollable"
+              style={{ padding: "15px 20px" }}
+            >
+              <Editor editor={editor} onSave={save} noteId={docId} />
+            </div>
+          </Splitter.Panel>
+        </Splitter>
+      </div>
+    </ThemeBridge>
   );
 };
 export default App;

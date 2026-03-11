@@ -1,6 +1,7 @@
 import File from "./file";
 import { GithubOutlined } from "@ant-design/icons";
 import { BlockNoteEditor } from "@blocknote/core";
+import { ModeToggle } from "./modeToogle";
 export const Toolbar = ({ editor }: { editor: BlockNoteEditor }) => (
   <div
     style={{
@@ -8,8 +9,7 @@ export const Toolbar = ({ editor }: { editor: BlockNoteEditor }) => (
       alignItems: "center",
       justifyContent: "space-between",
       padding: "8px 16px",
-      backgroundColor: "#ffffff",
-      borderBottom: "1px solid #e8e8e8",
+         borderBottom: "2px solid var(--toolbar-border-color)",
       height: "48px",
       position: "sticky",
       top: "0px",
@@ -17,14 +17,32 @@ export const Toolbar = ({ editor }: { editor: BlockNoteEditor }) => (
     }}
   >
     <div>
-      <File editor={editor}/>
+      <File editor={editor} />
     </div>
-    <div style={{ fontWeight: 600, fontSize: 16, color: "black" }}>NOTEDIT</div>
-    <a href="https://github.com/yangling-happy/notedit-hub" target="_blank" rel="noopener noreferrer" style={{
-        color: "black", 
-        fontSize: "24px",
-      }}>
-      <GithubOutlined />
-    </a>
+    <div
+      style={{
+        position: "absolute",
+        left: "50%",
+        transform: "translateX(-50%)",
+        fontWeight: 600,
+        fontSize: 16,
+      }}
+    >
+      NOTEDIT
+    </div>
+    <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
+      <ModeToggle />
+      <a
+        href="https://github.com/yangling-happy/notedit-hub"
+        target="_blank"
+        rel="noopener noreferrer"
+        style={{
+          fontSize: "28px",
+          color: "var(--toolbar-icon-color)",
+        }}
+      >
+        <GithubOutlined />
+      </a>
+    </div>
   </div>
 );

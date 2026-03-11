@@ -26,7 +26,13 @@
     background: transparent;
   }
 }
+:root {
+  --toolbar-border-color: rgba(0, 0, 0, 0.05);
+}
 
+[data-theme="dark"] {
+  --toolbar-border-color: rgba(255, 255, 255, 0.1);
+}
 @layer utilities {
   .fixed-viewport {
     position: fixed;
