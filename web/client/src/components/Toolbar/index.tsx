@@ -2,6 +2,7 @@ import File from "./file";
 import { GithubOutlined } from "@ant-design/icons";
 import { BlockNoteEditor } from "@blocknote/core";
 import { ModeToggle } from "./modeToogle";
+import { SearchPanel } from "./search";
 export const Toolbar = ({ editor }: { editor: BlockNoteEditor }) => (
   <div
     style={{
@@ -9,7 +10,7 @@ export const Toolbar = ({ editor }: { editor: BlockNoteEditor }) => (
       alignItems: "center",
       justifyContent: "space-between",
       padding: "8px 16px",
-         borderBottom: "2px solid var(--toolbar-border-color)",
+      borderBottom: "2px solid var(--toolbar-border-color)",
       height: "48px",
       position: "sticky",
       top: "0px",
@@ -31,6 +32,7 @@ export const Toolbar = ({ editor }: { editor: BlockNoteEditor }) => (
       NOTEDIT
     </div>
     <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
+      <SearchPanel editor={editor} />
       <ModeToggle />
       <a
         href="https://github.com/yangling-happy/notedit-hub"

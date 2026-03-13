@@ -49,7 +49,7 @@ const App: React.FC = () => {
             <div className="sidebar-hidden sidebar-scrollable">
               <Sidebar editor={editor} />
             </div>
-          </Splitter.Panel>
+          </Splitter.Panel >
           <Splitter.Panel
             className="main-content"
             min="20%"
