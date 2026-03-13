@@ -28,6 +28,7 @@ const App: React.FC = () => {
   editor.focus();
   const docId = "default-note-id";
   const { data, isLoading, save } = useEditorStorage(docId);
+
   useEffect(() => {
     if (editor && data && !isLoading) {
       editor.replaceBlocks(editor.document, data.content);

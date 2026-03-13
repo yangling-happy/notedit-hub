@@ -1,27 +1,25 @@
 import { BlockNoteEditor } from "@blocknote/core";
+import { useWordCount } from "../../hooks/useWordCount";
 
-
-export const Footbar = ({ }: { editor: BlockNoteEditor }) => {
+export const Footbar = ({ editor }: { editor: BlockNoteEditor }) => {
+  const wordCount = useWordCount(editor);
   return (
     <div
       style={{
         display: "flex",
         alignItems: "center",
-        justifyContent: "space-between",
+        justifyContent: "flex-end",
         padding: "8px 16px",
-        // borderTop: "2px solid var(--toolbar-border-color)",
         height: "30px",
-        position: "sticky", 
+        position: "sticky",
         bottom: "0px",
         left: "0",
         right: "0",
         zIndex: 2,
-        // backgroundColor: "var(--bg-color)", 
-        flexShrink: 0, 
+        flexShrink: 0,
       }}
     >
-      {/* 在这里添加底部栏的具体内容 */}
-      <span>Footbar Content</span>
+      <span>字符数（不计空格）：{wordCount}</span>
     </div>
   );
 };
