@@ -1,5 +1,8 @@
 {
     "footbar":{
         "word_count":"字符数（不计空格）："
+    },
+    "filelist":{
+        "open_folder":"打开文件夹..."
     }
 }

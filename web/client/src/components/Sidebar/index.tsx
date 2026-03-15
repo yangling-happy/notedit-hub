@@ -29,7 +29,7 @@ const Sidebar: React.FC<SidebarProps> = ({ editor }) => {
         />
       </div>
       <div className="sidebar-scrollable">
-        {activeTab === "文件" ? <FileList /> : <Outline editor={editor} />}
+        {activeTab === "文件" ? <FileList  /> : <Outline editor={editor} />}
       </div>
     </div>
   );

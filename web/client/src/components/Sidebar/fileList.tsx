@@ -1,25 +1,31 @@
-import {  Button } from "antd";
+import { Button } from "antd";
+import { useTranslation } from "react-i18next";
 
-export const FileList = () => (
-  <div
-    style={{
-      display: "flex",
-      flexDirection: "column",
-      height: "100%",
-    }}
-  >
+export const FileList = () => {
+  const { t } = useTranslation();
+
+  return (
     <div
       style={{
-        flex: 1,
         display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        overflow: "auto",
+        flexDirection: "column",
+        height: "100%",
       }}
-    > 
+    >
+      <div
+        style={{
+          flex: 1,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          overflow: "auto",
+        }}
+      >
+        {/* 可在此处添加文件列表内容 */}
+      </div>
+      <Button type="text" block style={{ flexShrink: 0 }}>
+        {t("filelist.open_folder")}
+      </Button>
     </div>
-    <Button type="text" block style={{ flexShrink: 0 }}>
-      打开文件夹...
-    </Button>
-  </div>
-);
+  );
+};
