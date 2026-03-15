@@ -1,8 +1,37 @@
 {
-    "footbar":{
-        "word_count":"Number of characters (excluding spaces): "
-    },
-    "filelist":{
-        "open_folder":"Open Folder..."
-    }
+  "footbar": {
+    "word_count": "Number of characters (excluding spaces): "
+  },
+  "filelist": {
+    "open_folder": "Open Folder..."
+  },
+  "sidebar": {
+    "files": "File",
+    "outline": "Outline"
+  },
+  "toolbar": {
+    "file": "File",
+    "new": "New",
+    "new_window": "New Window",
+    "open": "Open",
+    "open_folder": "Open Folder",
+    "recent": "Recent",
+    "save": "Save",
+    "save_as": "Save As",
+    "import": "Import",
+    "export": "Export",
+    "export_docx": "DOCX",
+    "export_pdf": "PDF",
+    "export_markdown": "Markdown"
+  },
+  "modal": {
+    "new_document_confirm": "Creating a new document will clear the current edit. Please confirm you have exported or backed up. Continue?",
+    "confirm": "Confirm",
+    "cancel": "Cancel"
+  },
+  "search": {
+    "placeholder": "Search full text content...",
+    "result_label": "Result",
+    "no_results": "No matching content found"
+  }
 }

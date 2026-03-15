@@ -15,7 +15,11 @@ const resources = {
 };
 i18n.use(initReactI18next).init({
   resources,
-  lng: "en",
+  fallbackLng: "zh",
+  detection: {
+      order: ['localStorage', 'navigator'], 
+      caches: ['localStorage'], 
+    },
   interpolation: {
     escapeValue: false, // react already safes from xss
   },

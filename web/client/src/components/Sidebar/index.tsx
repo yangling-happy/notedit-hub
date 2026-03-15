@@ -2,24 +2,29 @@ import React, { useState } from "react";
 import { Segmented } from "antd";
 import { FileList } from "./fileList";
 import { Outline } from "./outLine";
+import { useTranslation } from "react-i18next";
 interface SidebarProps {
   editor: any;
 }
 const Sidebar: React.FC<SidebarProps> = ({ editor }) => {
+  const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState(
-    localStorage.getItem("activeTab") || "文件",
+    localStorage.getItem("activeTab") || "files",
   );
   return (
     <div
       style={{
         display: "flex",
         flexDirection: "column",
-        height: "100%", 
+        height: "100%",
       }}
     >
       <div>
         <Segmented
-          options={["文件", "大纲"]}
+          options={[
+            { label: t("sidebar.files"), value: "files" },
+            { label: t("sidebar.outline"), value: "outline" },
+          ]}
           block
           value={activeTab}
           onChange={(value) => {
@@ -29,7 +34,11 @@ const Sidebar: React.FC<SidebarProps> = ({ editor }) => {
         />
       </div>
       <div className="sidebar-scrollable">
-        {activeTab === "文件" ? <FileList  /> : <Outline editor={editor} />}
+        {activeTab === "files" ? (
+          <FileList />
+        ) : (
+          <Outline editor={editor} />
+        )}
       </div>
     </div>
   );

@@ -1,14 +1,16 @@
 import { useState } from "react";
 import { Input, Typography } from "antd";
 import { useSearch } from "../../../hooks/useSearch";
+import { useTranslation } from "react-i18next";
 
 const { Search } = Input;
 const { Text } = Typography;
 
+
 export const SearchPanel = ({ editor }: { editor: any }) => {
   const { executeSearch } = useSearch(editor);
   const [results, setResults] = useState<any[]>([]);
-
+const { t } = useTranslation();
   const handleJump = (blockId: string) => {
     if (!blockId) return;
     editor.setTextCursorPosition(blockId, "start");
@@ -24,14 +26,14 @@ export const SearchPanel = ({ editor }: { editor: any }) => {
 
   const handleSearch = (value: string) => {
     const found = executeSearch(value);
-    console.log("搜索到数据:", found);
+    console.log(t("search.result_label"), found);
     setResults(found);
   };
 
   return (
     <div style={{ padding: "20px" }}>
       <Search
-        placeholder="搜索全文内容..."
+        placeholder={t("search.placeholder")}
         onSearch={handleSearch}
         allowClear
       />
@@ -57,7 +59,7 @@ export const SearchPanel = ({ editor }: { editor: any }) => {
             }}
           >
             <Text type="secondary" style={{ fontSize: "12px" }}>
-              结果 {index + 1}:
+              {t("search.result_label")} {index + 1}:
             </Text>
             <div style={{ fontWeight: 500 }}>{item.text}</div>
           </div>

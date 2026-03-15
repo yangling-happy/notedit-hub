@@ -6,11 +6,12 @@ import { Toolbar } from "./components/Toolbar";
 import { Footbar } from "./components/Footbar";
 import "./styles/global.css";
 import { useCreateBlockNote } from "@blocknote/react";
-import { zh } from "@blocknote/core/locales";
+import { en, zh } from "@blocknote/core/locales";
 import { useEditorStorage } from "./hooks/useEditorStorage";
 import { useEffect, useState } from "react";
 import { ThemeBridge } from "./components/themeBridge";
-import { LocaleContext } from "./context/localeContext";
+import { useTranslation } from "react-i18next";
+import "./locales/i18.ts";
 const App: React.FC = () => {
   // 以后换成自己的云存储，临时文件1小时后会过期
   async function uploadFile(file: File) {
@@ -25,9 +26,21 @@ const App: React.FC = () => {
       "tmpfiles.org/dl/",
     );
   }
-  const editor = useCreateBlockNote({ dictionary: zh, uploadFile });
+  const { i18n } = useTranslation();
+  const [lang, setLang] = useState(i18n.language);
+  useEffect(() => {
+    const handleLangChange = (lng: string) => setLang(lng);
+    i18n.on("languageChanged", handleLangChange);
+    return () => {
+      i18n.off("languageChanged", handleLangChange);
+    };
+  }, [i18n]);
+  const editor = useCreateBlockNote({
+    dictionary: lang === "zh" ? zh : en,
+    uploadFile,
+  });
+  // console.log("当前 App 中的 lang 状态:", lang);
   editor.focus();
-  const [lang, setLang] = useState("zh");
   const docId = "default-note-id";
   const { data, isLoading, save } = useEditorStorage(docId);
 
@@ -37,44 +50,42 @@ const App: React.FC = () => {
     }
   }, [editor, data, isLoading]);
   return (
-    <LocaleContext.Provider value={{ lang, setLang }}>
-      <ThemeBridge>
-        <div className="fixed-viewport">
-          <Toolbar editor={editor} />
-          <Splitter
-            style={{ flex: 1, height: "calc(100% - 48px)", overflow: "hidden" }}
+    <ThemeBridge>
+      <div className="fixed-viewport">
+        <Toolbar editor={editor} />
+        <Splitter
+          style={{ flex: 1, height: "calc(100% - 48px)", overflow: "hidden" }}
+        >
+          <Splitter.Panel
+            className="sidebar-container sidebar-trigger"
+            style={{ overflow: "hidden" }}
+            collapsible={{ start: true, end: true }}
           >
-            <Splitter.Panel
-              className="sidebar-container sidebar-trigger"
-              style={{ overflow: "hidden" }}
-              collapsible={{ start: true, end: true }}
+            <div className="sidebar-hidden sidebar-scrollable">
+              <Sidebar editor={editor} />
+            </div>
+          </Splitter.Panel>
+          <Splitter.Panel
+            className="main-content"
+            min="20%"
+            defaultSize="80%"
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              overflow: "hidden",
+            }}
+          >
+            <div
+              className="main-content-scrollable"
+              style={{ padding: "15px 20px", flex: 1, overflow: "auto" }}
             >
-              <div className="sidebar-hidden sidebar-scrollable">
-                <Sidebar editor={editor} />
-              </div>
-            </Splitter.Panel>
-            <Splitter.Panel
-              className="main-content"
-              min="20%"
-              defaultSize="80%"
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                overflow: "hidden",
-              }}
-            >
-              <div
-                className="main-content-scrollable"
-                style={{ padding: "15px 20px", flex: 1, overflow: "auto" }}
-              >
-                <Editor editor={editor} onSave={save} noteId={docId} />
-              </div>
-              <Footbar editor={editor} />
-            </Splitter.Panel>
-          </Splitter>
-        </div>
-      </ThemeBridge>
-    </LocaleContext.Provider>
+              <Editor key={lang} editor={editor} onSave={save} noteId={docId} />
+            </div>
+            <Footbar editor={editor} />
+          </Splitter.Panel>
+        </Splitter>
+      </div>
+    </ThemeBridge>
   );
 };
 export default App;

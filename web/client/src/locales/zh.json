@@ -1,8 +1,37 @@
 {
-    "footbar":{
-        "word_count":"字符数（不计空格）："
-    },
-    "filelist":{
-        "open_folder":"打开文件夹..."
-    }
+  "footbar": {
+    "word_count": "字符数（不计空格）："
+  },
+  "filelist": {
+    "open_folder": "打开文件夹..."
+  },
+  "sidebar": {
+    "files": "文件",
+    "outline": "大纲"
+  },
+  "toolbar": {
+    "file": "文件",
+    "new": "新建",
+    "new_window": "新建窗口",
+    "open": "打开",
+    "open_folder": "打开文件夹",
+    "recent": "最近打开",
+    "save": "保存",
+    "save_as": "另存为",
+    "import": "导入",
+    "export": "导出",
+    "export_docx": "DOCX",
+    "export_pdf": "PDF",
+    "export_markdown": "Markdown"
+  },
+  "modal": {
+    "new_document_confirm": "新建文档会清空当前编辑，请确认您已导出或已有备份，是否继续？",
+    "confirm": "确认",
+    "cancel": "取消"
+  },
+  "search": {
+    "placeholder": "搜索全文内容...",
+    "result_label": "结果",
+    "no_results": "未找到匹配内容"
+  }
 }
