@@ -3,6 +3,7 @@ import { GithubOutlined } from "@ant-design/icons";
 import { BlockNoteEditor } from "@blocknote/core";
 import { ModeToggle } from "./modeToogle";
 import { SearchPanel } from "./search";
+import { LanguageSwitcher } from "./i18";
 export const Toolbar = ({ editor }: { editor: BlockNoteEditor }) => (
   <div
     style={{
@@ -33,7 +34,9 @@ export const Toolbar = ({ editor }: { editor: BlockNoteEditor }) => (
     </div>
     <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
       <SearchPanel editor={editor} />
+      <LanguageSwitcher />
       <ModeToggle />
+
       <a
         href="https://github.com/yangling-happy/notedit-hub"
         target="_blank"
