@@ -12,6 +12,8 @@ import { useEffect, useState } from "react";
 import { ThemeBridge } from "./components/themeBridge";
 import { useTranslation } from "react-i18next";
 import "./locales/i18.ts";
+import { useRef } from "react";
+import type { Block } from "@blocknote/core"; 
 const App: React.FC = () => {
   // 以后换成自己的云存储，临时文件1小时后会过期
   async function uploadFile(file: File) {
@@ -28,6 +30,7 @@ const App: React.FC = () => {
   }
   const { i18n } = useTranslation();
   const [lang, setLang] = useState(i18n.language);
+  const latestContentRef = useRef<Block[] | null>(null);
   useEffect(() => {
     const handleLangChange = (lng: string) => setLang(lng);
     i18n.on("languageChanged", handleLangChange);
@@ -42,6 +45,7 @@ const App: React.FC = () => {
     },
     [lang],
   );
+
   useEffect(() => {
     if (editor) {
       editor.focus();
@@ -55,6 +59,20 @@ const App: React.FC = () => {
       editor.replaceBlocks(editor.document, data.content);
     }
   }, [editor, data, isLoading]);
+  useEffect(() => {
+    return () => {
+      if (editor) {
+        latestContentRef.current = editor.document;
+      }
+    };
+  }, [editor]);
+
+  // 2. 当 editor 实例更新后，尝试恢复内容
+  useEffect(() => {
+    if (editor && latestContentRef.current) {
+      editor.replaceBlocks(editor.document, latestContentRef.current);
+    }
+  }, [editor]);
   return (
     <ThemeBridge>
       <div className="fixed-viewport">
