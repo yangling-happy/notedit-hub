@@ -31,6 +31,7 @@ const App: React.FC = () => {
   const { i18n, ready } = useTranslation();
   const [lang, setLang] = useState(i18n.language);
   const latestContentRef = useRef<Block[] | null>(null);
+  
   useEffect(() => {
     if (ready) {
       setLang(i18n.language);

@@ -13,7 +13,7 @@ const resources = {
     translation: zh,
   },
 };
-i18n
+export const i18nPromise = i18n
   .use(LanguageDetector)
   .use(initReactI18next)
   .init({
@@ -22,7 +22,7 @@ i18n
     nonExplicitSupportedLngs: true, 
     supportedLngs: ["zh", "en"],
     detection: {
-      order: ["localStorage", "navigator"],
+      order: ["localStorage"],
       caches: ["localStorage"],
       
     },
