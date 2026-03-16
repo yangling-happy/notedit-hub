@@ -35,12 +35,18 @@ const App: React.FC = () => {
       i18n.off("languageChanged", handleLangChange);
     };
   }, [i18n]);
-  const editor = useCreateBlockNote({
-    dictionary: lang === "zh" ? zh : en,
-    uploadFile,
-  });
-  // console.log("当前 App 中的 lang 状态:", lang);
-  editor.focus();
+  const editor = useCreateBlockNote(
+    {
+      dictionary: lang === "zh" ? zh : en,
+      uploadFile,
+    },
+    [lang],
+  );
+  useEffect(() => {
+    if (editor) {
+      editor.focus();
+    }
+  }, [editor]);
   const docId = "default-note-id";
   const { data, isLoading, save } = useEditorStorage(docId);
 
