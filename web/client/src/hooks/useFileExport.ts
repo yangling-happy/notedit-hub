@@ -22,16 +22,20 @@ const formatFileName = (document: Block[]): string => {
 
 const useFileExport = (editor: any) => {
   const exportFile = async (key: string) => {
-    const processor = EXPORT_PROCESSORS[key as keyof typeof EXPORT_PROCESSORS];
+    const getProcessor =
+      EXPORT_PROCESSORS[key as keyof typeof EXPORT_PROCESSORS];
     const config = EXPORT_CONFIG[key as keyof typeof EXPORT_CONFIG];
 
-    if (!processor || !config) {
+    if (!getProcessor || !config) {
       console.error(`未找到对应的导出处理器，Key: ${key}`);
       return;
     }
 
     try {
-      const blob = await processor(editor);
+      const actualProcessor = await getProcessor();
+
+      const blob = await actualProcessor(editor);
+
       const ext = config.ext;
       const fileName = `${formatFileName(editor.document)}${ext}`;
       fileExport(blob, fileName);
@@ -42,5 +46,4 @@ const useFileExport = (editor: any) => {
 
   return { exportFile };
 };
-
 export default useFileExport;
