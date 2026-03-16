@@ -19,9 +19,12 @@ i18n
   .init({
     resources,
     fallbackLng: "zh",
+    nonExplicitSupportedLngs: true, 
+    supportedLngs: ["zh", "en"],
     detection: {
       order: ["localStorage", "navigator"],
       caches: ["localStorage"],
+      
     },
     interpolation: {
       escapeValue: false, // react already safes from xss
