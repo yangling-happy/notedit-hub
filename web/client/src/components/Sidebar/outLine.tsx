@@ -1,13 +1,13 @@
 import { useOutline } from "../../hooks/useOutline";
 import type { Block, BlockNoteEditor } from "@blocknote/core";
-
+import { useTranslation } from "react-i18next";
 interface OutlineProps {
   editor: BlockNoteEditor;
 }
 
 export const Outline: React.FC<OutlineProps> = ({ editor }: OutlineProps) => {
   const headings = useOutline(editor);
-
+  const { t } = useTranslation();
   if (!headings || headings.length === 0) {
     return <div></div>;
   }
@@ -33,7 +33,7 @@ export const Outline: React.FC<OutlineProps> = ({ editor }: OutlineProps) => {
             handleJump(block);
           }}
         >
-          {block.content.map((c: any) => c.text).join("") || "无题"}
+          {block.content.map((c: any) => c.text).join("") || t("outline.untitled")}
         </div>
       ))}
     </div>

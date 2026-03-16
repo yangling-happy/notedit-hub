@@ -33,5 +33,8 @@
     "placeholder": "搜索全文内容...",
     "result_label": "结果",
     "no_results": "未找到匹配内容"
+  },
+  "outline": {
+  "untitled":"无题"
   }
 }

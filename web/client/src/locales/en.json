@@ -33,5 +33,8 @@
     "placeholder": "Search full text content...",
     "result_label": "Result",
     "no_results": "No matching content found"
+  },
+  "outline": {
+  "untitled":"untitled"
   }
 }
