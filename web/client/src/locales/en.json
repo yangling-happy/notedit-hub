@@ -3,7 +3,6 @@
     "word_count": "Number of characters (excluding spaces): "
   },
   "filelist": {
-    "new_document": "New Document..."
   },
   "sidebar": {
     "wiki": "Wiki",
@@ -16,13 +15,14 @@
     "open": "Open",
     "open_folder": "Open Folder",
     "recent": "Recent",
-    "save": "Save",
-    "save_as": "Save As",
     "import": "Import",
     "export": "Export",
     "export_docx": "DOCX",
     "export_pdf": "PDF",
-    "export_markdown": "Markdown"
+    "export_markdown": "Markdown",
+    "save": "Save",
+    "create": "Create",
+    "delete": "Delete"
   },
   "modal": {
     "new_document_confirm": "Creating a new document will clear the current edit. Please confirm you have exported or backed up. Continue?",

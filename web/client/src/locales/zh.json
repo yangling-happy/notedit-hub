@@ -3,7 +3,6 @@
     "word_count": "字符数（不计空格）："
   },
   "filelist": {
-    "new_document": "新建文档..."
   },
   "sidebar": {
     "wiki": "文档",
@@ -16,13 +15,14 @@
     "open": "打开",
     "open_folder": "打开文件夹",
     "recent": "最近打开",
-    "save": "保存",
-    "save_as": "另存为",
     "import": "导入",
     "export": "导出",
     "export_docx": "DOCX",
     "export_pdf": "PDF",
-    "export_markdown": "Markdown"
+    "export_markdown": "Markdown",
+    "save": "保存",
+    "create": "新建",
+    "delete": "删除"
   },
   "modal": {
     "new_document_confirm": "新建文档会清空当前编辑，请确认您已导出或已有备份，是否继续？",

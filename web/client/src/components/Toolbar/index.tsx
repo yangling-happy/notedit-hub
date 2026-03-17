@@ -4,13 +4,17 @@ import { BlockNoteEditor } from "@blocknote/core";
 import { ModeToggle } from "./modeToogle";
 import { SearchPanel } from "./search";
 import { LanguageSwitcher } from "./i18";
+import { SaveButton } from "./save";
+import { CreateButton } from "./create";
+import { DeleteButton } from "./delete";
+
 export const Toolbar = ({ editor }: { editor: BlockNoteEditor }) => (
   <div
     style={{
       display: "flex",
       alignItems: "center",
       justifyContent: "space-between",
-      padding: "8px 16px",
+      padding: "8px 24px",
       borderBottom: "2px solid var(--toolbar-border-color)",
       height: "48px",
       position: "sticky",
@@ -18,31 +22,34 @@ export const Toolbar = ({ editor }: { editor: BlockNoteEditor }) => (
       zIndex: 2,
     }}
   >
-    <div>
+    <div style={{ display: "flex", alignItems: "center", gap: "12px", flex: 1 }}>
       <File editor={editor} />
+      <SearchPanel editor={editor} />
     </div>
+
     <div
       style={{
-        position: "absolute",
-        left: "50%",
-        transform: "translateX(-50%)",
         fontWeight: 600,
-        fontSize: 16,
+        fontSize: 18,
+        textAlign: "center",
       }}
     >
       NOTEDIT
     </div>
-    <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
-      <SearchPanel editor={editor} />
+    
+    {/* 右侧区域 */}
+    <div style={{ display: "flex", alignItems: "center", gap: "12px", flex: 1, justifyContent: "flex-end" }}>
+      <CreateButton/>
+      <SaveButton />
+      <DeleteButton />
       <LanguageSwitcher />
       <ModeToggle />
-
       <a
         href="https://github.com/yangling-happy/notedit-hub"
         target="_blank"
         rel="noopener noreferrer"
         style={{
-          fontSize: "28px",
+          fontSize: "24px",
           color: "var(--toolbar-icon-color)",
         }}
       >

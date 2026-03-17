@@ -13,15 +13,15 @@ const File: React.FC<{ editor: BlockNoteEditor }> = ({ editor }) => {
   const { t } = useTranslation();
   const { exportFile } = useFileExport(editor);
   const { importFile } = useFileImport(editor);
-  
+
   const handleFilesSelected = (files: File[]) => {
     if (files.length > 0) {
-      files.forEach(file => importFile(file)); 
+      files.forEach((file) => importFile(file));
     }
   };
-  
+
   const { Picker, openPicker } = useFilePicker(handleFilesSelected);
-  
+
   const items: MenuProps["items"] = [
     {
       key: "1",
@@ -47,17 +47,6 @@ const File: React.FC<{ editor: BlockNoteEditor }> = ({ editor }) => {
           label: t("toolbar.recent"),
         },
       ],
-    },
-    {
-      type: "divider",
-    },
-    {
-      key: "4",
-      label: t("toolbar.save"),
-    },
-    {
-      key: "5",
-      label: t("toolbar.save_as"),
     },
     {
       type: "divider",

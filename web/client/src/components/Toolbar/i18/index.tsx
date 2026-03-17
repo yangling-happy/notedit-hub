@@ -12,7 +12,7 @@ export const LanguageSwitcher = () => {
 
   return (
     <Segmented
-      value={currentLang} // 使用归一化后的值
+      value={currentLang} 
       onChange={handleLangChange}
       options={[
         { label: "中", value: "zh" },
