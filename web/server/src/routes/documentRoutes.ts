@@ -1,9 +1,16 @@
-import express from 'express';
-import { createDocument } from '../controllers/documentController.js';
+import express from "express";
+import {
+  createDocument,
+  getAllDocuments,
+  getDocumentById,
+  updateDocument,
+} from "../controllers/documentController.js";
 
-const router : express.Router = express.Router();
+const router: express.Router = express.Router();
 
-// 将 POST 请求映射到刚才写的函数上
-router.post('/', createDocument);
+router.get("/", getAllDocuments);
+router.get("/:id", getDocumentById);
+router.post("/", createDocument);
+router.put("/:id", updateDocument);
 
 export default router;

@@ -7,7 +7,8 @@
   },
   "sidebar": {
     "wiki": "文档",
-    "outline": "大纲"
+    "outline": "大纲",
+    "wiki_untitled": "无标题文档"
   },
   "toolbar": {
     "file": "文件",

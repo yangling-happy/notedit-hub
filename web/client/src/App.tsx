@@ -7,15 +7,14 @@ import { Footbar } from "./components/Footbar";
 import "./styles/global.css";
 import { useCreateBlockNote } from "@blocknote/react";
 import { en, zh } from "@blocknote/core/locales";
-import { useEditorStorage } from "./hooks/useEditorStorage";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import { ThemeBridge } from "./components/themeBridge";
 import { useTranslation } from "react-i18next";
 import "./locales/i18.ts";
-import { useRef } from "react";
-import type { Block } from "@blocknote/core";
+import { useLocation } from "react-router-dom";
+import { getDocumentById, updateDocument } from "./services/api";
+
 const App: React.FC = () => {
-  // 以后换成自己的云存储，临时文件1小时后会过期
   async function uploadFile(file: File) {
     const body = new FormData();
     body.append("file", file);
@@ -28,15 +27,25 @@ const App: React.FC = () => {
       "tmpfiles.org/dl/",
     );
   }
+
   const { i18n, ready } = useTranslation();
   const [lang, setLang] = useState(i18n.language);
-  const latestContentRef = useRef<Block[] | null>(null);
-  
+  const location = useLocation();
+
+  // 从 URL 路径中提取文档 ID，例如 /wiki/:id
+  const docId = location.pathname.startsWith("/wiki/")
+    ? location.pathname.slice(6)
+    : null;
+
+  const docIdRef = useRef(docId);
   useEffect(() => {
-    if (ready) {
-      setLang(i18n.language);
-    }
+    docIdRef.current = docId;
+  }, [docId]);
+
+  useEffect(() => {
+    if (ready) setLang(i18n.language);
   }, [ready, i18n]);
+
   useEffect(() => {
     const handleLangChange = (lng: string) => setLang(lng);
     i18n.on("languageChanged", handleLangChange);
@@ -44,43 +53,60 @@ const App: React.FC = () => {
       i18n.off("languageChanged", handleLangChange);
     };
   }, [i18n]);
+
   const editor = useCreateBlockNote(
-    {
-      dictionary: lang === "zh" ? zh : en,
-      uploadFile,
-    },
+    { dictionary: lang === "zh" ? zh : en, uploadFile },
     [lang],
   );
 
   useEffect(() => {
-    if (editor) {
-      editor.focus();
-    }
+    if (editor) editor.focus();
   }, [editor]);
-  const docId = "default-note-id";
-  const { data, isLoading, save } = useEditorStorage(docId);
 
+  // 当 docId 或 editor 变化时，从 API 加载文档内容
   useEffect(() => {
-    if (editor && data && !isLoading) {
-      editor.replaceBlocks(editor.document, data.content);
+    if (!editor) return;
+    if (!docId) {
+      // 无文档时清空编辑器
+      try {
+        editor.replaceBlocks(editor.document, [{ type: "paragraph" }]);
+      } catch (_) {}
+      return;
     }
-  }, [editor, data, isLoading]);
-  useEffect(() => {
+    let cancelled = false;
+    getDocumentById(docId)
+      .then((doc) => {
+        if (cancelled) return;
+        const content =
+          doc.content && Array.isArray(doc.content) && doc.content.length > 0
+            ? doc.content
+            : [{ type: "paragraph" }];
+        try {
+          editor.replaceBlocks(editor.document, content);
+        } catch (_) {}
+      })
+      .catch(() => {});
     return () => {
-      if (editor) {
-        latestContentRef.current = editor.document;
-      }
+      cancelled = true;
     };
-  }, [editor]);
+  }, [docId, editor]);
 
-  useEffect(() => {
-    if (editor && latestContentRef.current) {
-      editor.replaceBlocks(editor.document, latestContentRef.current);
-    }
-  }, [editor]);
-  if (!ready) {
-    return <div>Loading...</div>;
-  }
+  // 防抖保存：编辑 1s 后自动同步到 MongoDB
+  const saveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const handleSave = useCallback(
+    (note: { id: string; content: any[]; updatedAt: number }) => {
+      const currentDocId = docIdRef.current;
+      if (!currentDocId) return;
+      if (saveTimerRef.current) clearTimeout(saveTimerRef.current);
+      saveTimerRef.current = setTimeout(() => {
+        updateDocument(currentDocId, { content: note.content }).catch(() => {});
+      }, 1000);
+    },
+    [],
+  );
+
+  if (!ready) return <div>Loading...</div>;
+
   return (
     <ThemeBridge>
       <div className="fixed-viewport">
@@ -111,7 +137,12 @@ const App: React.FC = () => {
               className="main-content-scrollable"
               style={{ padding: "15px 20px", flex: 1, overflow: "auto" }}
             >
-              <Editor key={lang} editor={editor} onSave={save} noteId={docId} />
+              <Editor
+                key={lang}
+                editor={editor}
+                onSave={handleSave}
+                noteId={docId ?? undefined}
+              />
             </div>
             <Footbar editor={editor} />
           </Splitter.Panel>
@@ -120,4 +151,5 @@ const App: React.FC = () => {
     </ThemeBridge>
   );
 };
+
 export default App;
