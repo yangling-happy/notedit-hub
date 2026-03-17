@@ -2,7 +2,7 @@ import { Button, message } from "antd";
 import { useTranslation } from "react-i18next";
 import { PlusOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
-import { createDocument } from "../../../services/api.ts";
+import { createDocument } from "../../../services/api";
 
 export const CreateButton = () => {
   const { t } = useTranslation();
@@ -10,14 +10,14 @@ export const CreateButton = () => {
 
   const handleCreate = async () => {
     try {
-      const newDoc = await createDocument(t("filelist.untitled") || "Untitled");
+      const newDoc = await createDocument(t("filelist.untitled"));
       if (newDoc && newDoc._id) {
         navigate(`/wiki/${newDoc._id}`);
-        message.success(t("common.create_success") || "Created");
+        message.success(t("common.create_success"));
       }
     } catch (error) {
       console.error("Failed to create document:", error);
-      message.error("Create failed");
+      message.error(t("common.create_failed"));
     }
   };
 

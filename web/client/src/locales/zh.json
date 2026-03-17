@@ -2,7 +2,9 @@
   "footbar": {
     "word_count": "字符数（不计空格）："
   },
-  "filelist": {},
+  "filelist": {
+    "untitled": "无标题"
+  },
   "sidebar": {
     "wiki": "文档",
     "outline": "大纲"
@@ -37,6 +39,7 @@
     "untitled": "无题"
   },
   "common": {
-    "create_success": "文档创建成功"
+    "create_success": "文档创建成功",
+    "create_failed": "创建失败"
   }
 }

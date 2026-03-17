@@ -3,6 +3,7 @@
     "word_count": "Number of characters (excluding spaces): "
   },
   "filelist": {
+    "untitled": "Untitled"
   },
   "sidebar": {
     "wiki": "Wiki",
@@ -35,9 +36,10 @@
     "no_results": "No matching content found"
   },
   "outline": {
-  "untitled":"untitled"
+    "untitled": "untitled"
   },
-  "common":{
-    "create_success": "Document created successfully"
+  "common": {
+    "create_success": "Document created successfully",
+    "create_failed": "Create failed"
   }
 }
