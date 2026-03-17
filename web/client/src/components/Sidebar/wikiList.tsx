@@ -1,7 +1,7 @@
 import { Button } from "antd";
 import { useTranslation } from "react-i18next";
 
-export const FileList = () => {
+export const WikiList = () => {
   const { t } = useTranslation();
 
   return (
@@ -24,7 +24,7 @@ export const FileList = () => {
         {/* 可在此处添加文件列表内容 */}
       </div>
       <Button type="text" block style={{ flexShrink: 0 }}>
-        {t("filelist.open_folder")}
+        {t("filelist.new_document")}
       </Button>
     </div>
   );

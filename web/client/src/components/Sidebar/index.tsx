@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Segmented } from "antd";
-import { FileList } from "./fileList";
+import { WikiList } from "./wikiList";
 import { Outline } from "./outLine";
 import { useTranslation } from "react-i18next";
 interface SidebarProps {
@@ -9,7 +9,7 @@ interface SidebarProps {
 const Sidebar: React.FC<SidebarProps> = ({ editor }) => {
   const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState(
-    localStorage.getItem("activeTab") || "files",
+    localStorage.getItem("activeTab") || "wiki",
   );
   return (
     <div
@@ -22,7 +22,7 @@ const Sidebar: React.FC<SidebarProps> = ({ editor }) => {
       <div>
         <Segmented
           options={[
-            { label: t("sidebar.files"), value: "files" },
+            { label: t("sidebar.wiki"), value: "wiki" },
             { label: t("sidebar.outline"), value: "outline" },
           ]}
           block
@@ -34,8 +34,8 @@ const Sidebar: React.FC<SidebarProps> = ({ editor }) => {
         />
       </div>
       <div className="sidebar-scrollable">
-        {activeTab === "files" ? (
-          <FileList />
+        {activeTab === "wiki" ? (
+          <WikiList />
         ) : (
           <Outline editor={editor} />
         )}
