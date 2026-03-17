@@ -36,5 +36,8 @@
   },
   "outline": {
   "untitled":"untitled"
+  },
+  "common":{
+    "create_success": "Document created successfully"
   }
 }
