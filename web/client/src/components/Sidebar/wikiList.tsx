@@ -1,7 +1,7 @@
-import { useEffect, useState, useCallback, useRef } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { List, Typography, Skeleton } from "antd";
 import { FileTextOutlined } from "@ant-design/icons";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { getAllDocuments } from "../../services/api";
 import { useTranslation } from "react-i18next";
 
@@ -14,50 +14,32 @@ interface DocItem {
 export const WikiList = () => {
   const { t } = useTranslation();
   const [docs, setDocs] = useState<DocItem[]>([]);
-  const [initialLoading, setInitialLoading] = useState(true);
-  const [_, setIsRefreshing] = useState(false);
+  const [loading, setLoading] = useState(true);
+
   const navigate = useNavigate();
-  const location = useLocation();
+  const { docId: currentId } = useParams<{ docId: string }>();
 
-  // 使用 useRef 记录是否是初次挂载，防止逻辑竞争
-  const isFirstMount = useRef(true);
-
-  // 从路径中提取当前激活的文档 ID
-  const currentId = location.pathname.startsWith("/wiki/")
-    ? location.pathname.slice(6)
-    : null;
-
-  // 核心优化：增加 isSilent 参数
-  const fetchDocs = useCallback(async (isSilent = false) => {
-    // 如果是静默刷新，不展示 Skeleton
-    if (!isSilent) setInitialLoading(true);
-
-    setIsRefreshing(true);
+  const fetchDocs = useCallback(async (isInitial = false) => {
+    if (isInitial) setLoading(true);
     try {
       const data = await getAllDocuments();
       setDocs(data);
-    } catch (_) {
-      // 生产环境建议加上基本的错误反馈
+    } catch (error) {
+      console.error("Failed to fetch docs:", error);
     } finally {
-      setInitialLoading(false);
-      setIsRefreshing(false);
+      setLoading(false);
     }
   }, []);
 
-  // 逻辑 1：组件挂载时执行一次全量加载（显示骨架屏）
   useEffect(() => {
-    fetchDocs(false);
-    isFirstMount.current = false;
+    fetchDocs(true);
   }, [fetchDocs]);
 
-  // 逻辑 2：路由变化时执行静默刷新
   useEffect(() => {
-    // 只有在非初次挂载，且路径确实是 wiki 路径时才触发
-    if (!isFirstMount.current && location.pathname.startsWith("/wiki")) {
-      // 此时 docs 通常已有数据，isSilent 设为 true 避免闪屏
-      fetchDocs(true);
+    if (currentId) {
+      fetchDocs(false);
     }
-  }, [location.pathname, fetchDocs]);
+  }, [currentId, fetchDocs]);
 
   return (
     <div
@@ -68,15 +50,12 @@ export const WikiList = () => {
         padding: "4px 0",
       }}
     >
-      {/* 关键：只有 initialLoading 为 true 且没有数据时才显示骨架屏 */}
       <Skeleton
-        loading={initialLoading && docs.length === 0}
+        loading={loading && docs.length === 0}
         active
         paragraph={{ rows: 6 }}
       >
-        {docs.length === 0 ? (
-          <div />
-        ) : (
+        {docs.length > 0 && (
           <List
             dataSource={docs}
             renderItem={(doc) => {

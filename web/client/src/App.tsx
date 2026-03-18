@@ -11,7 +11,7 @@ import { useEffect, useState, useCallback, useRef } from "react";
 import { ThemeBridge } from "./components/themeBridge";
 import { useTranslation } from "react-i18next";
 import "./locales/i18.ts";
-import { useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { getDocumentById, updateDocument } from "./services/api";
 
 const App: React.FC = () => {
@@ -30,12 +30,8 @@ const App: React.FC = () => {
 
   const { i18n, ready } = useTranslation();
   const [lang, setLang] = useState(i18n.language);
-  const location = useLocation();
 
-  // 从 URL 路径中提取文档 ID，例如 /wiki/:id
-  const docId = location.pathname.startsWith("/wiki/")
-    ? location.pathname.slice(6)
-    : null;
+  const { docId } = useParams<{ docId: string }>();
 
   const docIdRef = useRef(docId);
   useEffect(() => {
@@ -73,7 +69,7 @@ const App: React.FC = () => {
       } catch (_) {}
       return;
     }
-    let cancelled = false;
+    let cancelled = false; //竞态条件：如果在 fetch 过程中 docId 发生变化，或者组件卸载了，就不再执行 setState
     getDocumentById(docId)
       .then((doc) => {
         if (cancelled) return;
