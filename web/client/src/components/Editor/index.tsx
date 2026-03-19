@@ -4,6 +4,7 @@ import "@blocknote/core/fonts/inter.css";
 import { BlockNoteEditor } from "@blocknote/core";
 import { useCallback } from "react";
 import { useTheme } from "next-themes";
+import { Welcome } from "../Welcome";
 
 interface EditorProps {
   editor: BlockNoteEditor;
@@ -12,8 +13,8 @@ interface EditorProps {
 }
 
 export default function Editor({ editor, onSave, noteId }: EditorProps) {
-  const {resolvedTheme} = useTheme();
-  const themeValue = resolvedTheme === 'dark' ? 'dark' : 'light';
+  const { resolvedTheme } = useTheme();
+  const themeValue = resolvedTheme === "dark" ? "dark" : "light";
   const handleSave = useCallback(() => {
     if (onSave && noteId) {
       onSave({
@@ -24,5 +25,11 @@ export default function Editor({ editor, onSave, noteId }: EditorProps) {
     }
   }, [onSave, noteId, editor.document]);
 
-  return <BlockNoteView editor={editor} theme={themeValue} onChange={handleSave} />;
+  if (!noteId) {
+    return <Welcome />;
+  }
+
+  return (
+    <BlockNoteView editor={editor} theme={themeValue} onChange={handleSave} />
+  );
 }

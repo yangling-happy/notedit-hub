@@ -2,7 +2,7 @@ import { Button, message, Modal } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useParams } from "react-router-dom";
-import { deleteDocument } from "../../../services/api";
+import { deleteDocument, getAllDocuments } from "../../../services/api";
 import { notifyDocumentsChanged } from "../../../constants/documentEvents";
 
 export const DeleteButton = () => {
@@ -24,7 +24,13 @@ export const DeleteButton = () => {
         try {
           await deleteDocument(docId);
           notifyDocumentsChanged();
-          navigate("/wiki");
+          const remainingDocs = await getAllDocuments();
+          if (remainingDocs && remainingDocs.length > 0) {
+            navigate(`/wiki/${remainingDocs[0]._id}`);
+          } else {
+            navigate("/wiki");
+          }
+
           message.success(t("common.delete_success"));
         } catch (error) {
           console.error("Failed to delete document:", error);

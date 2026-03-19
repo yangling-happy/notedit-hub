@@ -56,8 +56,8 @@ const App: React.FC = () => {
   );
 
   useEffect(() => {
-    if (editor) editor.focus();
-  }, [editor]);
+    if (editor && docId) editor.focus();
+  }, [editor, docId]);
 
   // 当 docId 或 editor 变化时，从 API 加载文档内容
   useEffect(() => {
@@ -131,7 +131,11 @@ const App: React.FC = () => {
           >
             <div
               className="main-content-scrollable"
-              style={{ padding: "15px 20px", flex: 1, overflow: "auto" }}
+              style={{
+                padding: docId ? "15px 20px" : "0",
+                flex: 1,
+                overflow: "auto",
+              }}
             >
               <Editor
                 key={lang}
@@ -140,7 +144,7 @@ const App: React.FC = () => {
                 noteId={docId ?? undefined}
               />
             </div>
-            <Footbar editor={editor} />
+            {docId && <Footbar editor={editor} />}
           </Splitter.Panel>
         </Splitter>
       </div>

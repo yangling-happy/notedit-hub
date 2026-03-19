@@ -46,5 +46,10 @@
     "delete_success": "Document deleted successfully",
     "delete_failed": "Delete failed",
     "delete_no_document": "No document selected to delete"
+  },
+  "welcome": {
+    "title": "Welcome to NOTEDIT",
+    "subtitle": "Start creating your first document, record ideas, thoughts and notes.",
+    "hint": "Click the \"Create\" button in the toolbar to create a document."
   }
 }
