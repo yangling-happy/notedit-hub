@@ -35,12 +35,6 @@ export const WikiList = () => {
     fetchDocs(true);
   }, [fetchDocs]);
 
-  useEffect(() => {
-    if (currentId) {
-      fetchDocs(false);
-    }
-  }, [currentId, fetchDocs]);
-
   return (
     <div
       style={{
