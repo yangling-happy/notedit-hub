@@ -41,6 +41,9 @@
   },
   "common": {
     "create_success": "Document created successfully",
-    "create_failed": "Create failed"
+    "create_failed": "Create failed",
+    "delete_success": "Document deleted successfully",
+    "delete_failed": "Delete failed",
+    "delete_no_document": "No document selected to delete"
   }
 }

@@ -41,6 +41,9 @@
   },
   "common": {
     "create_success": "文档创建成功",
-    "create_failed": "创建失败"
+    "create_failed": "创建失败",
+    "delete_success": "文档删除成功",
+    "delete_failed": "删除失败",
+    "delete_no_document": "当前没有可删除的文档"
   }
 }

@@ -48,3 +48,13 @@ export const updateDocument = async (req: any, res: any) => {
     res.status(500).json({ message: "服务器内部错误" });
   }
 };
+
+export const deleteDocument = async (req: any, res: any) => {
+  try {
+    const deletedDoc = await Document.findByIdAndDelete(req.params.id);
+    if (!deletedDoc) return res.status(404).json({ message: "文档不存在" });
+    res.json({ message: "删除成功" });
+  } catch (error) {
+    res.status(500).json({ message: "服务器内部错误" });
+  }
+};
