@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { PlusOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { createDocument } from "../../../services/api";
+import { notifyDocumentsChanged } from "../../../constants/documentEvents";
 
 export const CreateButton = () => {
   const { t } = useTranslation();
@@ -12,6 +13,7 @@ export const CreateButton = () => {
     try {
       const newDoc = await createDocument(t("filelist.untitled"));
       if (newDoc && newDoc._id) {
+        notifyDocumentsChanged();
         navigate(`/wiki/${newDoc._id}`);
         message.success(t("common.create_success"));
       }

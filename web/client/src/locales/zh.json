@@ -28,6 +28,7 @@
   },
   "modal": {
     "new_document_confirm": "新建文档会清空当前编辑，请确认您已导出或已有备份，是否继续？",
+    "delete_document_confirm": "删除后不可恢复，是否确认删除当前文档？",
     "confirm": "确认",
     "cancel": "取消"
   },

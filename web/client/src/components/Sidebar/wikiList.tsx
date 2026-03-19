@@ -4,6 +4,7 @@ import { FileTextOutlined } from "@ant-design/icons";
 import { useNavigate, useParams } from "react-router-dom";
 import { getAllDocuments } from "../../services/api";
 import { useTranslation } from "react-i18next";
+import { DOCUMENTS_CHANGED_EVENT } from "../../constants/documentEvents";
 
 interface DocItem {
   _id: string;
@@ -33,6 +34,21 @@ export const WikiList = () => {
 
   useEffect(() => {
     fetchDocs(true);
+  }, [fetchDocs]);
+
+  useEffect(() => {
+    const handleDocumentsChanged = () => {
+      fetchDocs();
+    };
+
+    window.addEventListener(DOCUMENTS_CHANGED_EVENT, handleDocumentsChanged);
+
+    return () => {
+      window.removeEventListener(
+        DOCUMENTS_CHANGED_EVENT,
+        handleDocumentsChanged,
+      );
+    };
   }, [fetchDocs]);
 
   return (

@@ -28,6 +28,7 @@
   },
   "modal": {
     "new_document_confirm": "Creating a new document will clear the current edit. Please confirm you have exported or backed up. Continue?",
+    "delete_document_confirm": "This action cannot be undone. Delete the current document?",
     "confirm": "Confirm",
     "cancel": "Cancel"
   },
