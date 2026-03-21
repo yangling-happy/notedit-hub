@@ -40,7 +40,7 @@ export const updateDocument = async (req: any, res: any) => {
         ...(title !== undefined && { title }),
         ...(content !== undefined && { content }),
       },
-      { new: true },
+      { returnDocument: "after" },
     );
     if (!doc) return res.status(404).json({ message: "文档不存在" });
     res.json(doc);

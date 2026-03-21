@@ -13,7 +13,10 @@ import { useTranslation } from "react-i18next";
 import "./locales/i18.ts";
 import { useParams } from "react-router-dom";
 import { getDocumentById, updateDocument } from "./services/api";
-
+import { AIExtension, aiDocumentFormats } from "@blocknote/xl-ai";
+import { DefaultChatTransport } from "ai";
+import { en as aiEn, zh as aiZh } from "@blocknote/xl-ai/locales";
+import "@blocknote/xl-ai/style.css";
 const App: React.FC = () => {
   async function uploadFile(file: File) {
     const body = new FormData();
@@ -51,7 +54,32 @@ const App: React.FC = () => {
   }, [i18n]);
 
   const editor = useCreateBlockNote(
-    { dictionary: lang === "zh" ? zh : en, uploadFile },
+    {
+      dictionary: {
+        ...(lang === "zh" ? zh : en),
+        ai: lang === "zh" ? aiZh : aiEn,
+      },
+      uploadFile,
+      extensions: [
+        AIExtension({
+          transport: new DefaultChatTransport({
+            api: "http://localhost:3001/api/documents/chat",
+            body: {
+              systemPrompt: aiDocumentFormats.html.systemPrompt,
+            },
+          }),
+          streamToolsProvider: aiDocumentFormats.html.getStreamToolsProvider({
+            defaultStreamTools: {
+              add: true,
+              update: true,
+              delete: true,
+            },
+          }),
+          documentStateBuilder:
+            aiDocumentFormats.html.defaultDocumentStateBuilder,
+        }),
+      ],
+    },
     [lang],
   );
 
