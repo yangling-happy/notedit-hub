@@ -18,7 +18,11 @@ const FALLBACK_TOOL_DEFINITIONS = [
   {
     name: "applyDocumentOperations",
     description:
-      "Apply document operations to update the editor content. Use for add/update/delete style edits.",
+      "The primary engine for document manipulation. Use this tool whenever the user requests to create, modify, or remove content. \n" +
+      "- 'add': Use to insert new blocks (text, headings, etc.) relative to an existing 'referenceId'. \n" +
+      "- 'update': Use to change the content or internal data of an existing block. \n" +
+      "- 'delete': Use to permanently remove a block by its ID. \n" +
+      "STRICT RULES: 1. Only use block IDs provided in the latest 'documentState'. 2. Never guess or hallucinate IDs. 3. If an operation is ambiguous, prefer 'add' with a safe referenceId.",
     inputSchema: {
       type: "object",
       properties: {
