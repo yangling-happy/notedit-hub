@@ -1,7 +1,6 @@
 import { BlockNoteView } from "@blocknote/mantine";
 import "@blocknote/mantine/style.css";
 import "@blocknote/core/fonts/inter.css";
-import { BlockNoteEditor } from "@blocknote/core";
 import { filterSuggestionItems } from "@blocknote/core/extensions";
 import { useCallback } from "react";
 import { useTheme } from "next-themes";
@@ -18,13 +17,15 @@ import {
   getDefaultReactSlashMenuItems,
   getFormattingToolbarItems,
 } from "@blocknote/react";
+import { useEditor } from "../../contexts/editorContext";
+
 interface EditorProps {
-  editor: BlockNoteEditor;
   onSave?: (content: any) => void;
   noteId?: string;
 }
 
-export default function Editor({ editor, onSave, noteId }: EditorProps) {
+export default function Editor({ onSave, noteId }: EditorProps) {
+  const editor = useEditor();
   const { resolvedTheme } = useTheme();
   const themeValue = resolvedTheme === "dark" ? "dark" : "light";
   const handleSave = useCallback(() => {

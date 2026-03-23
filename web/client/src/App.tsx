@@ -17,6 +17,7 @@ import { AIExtension, aiDocumentFormats } from "@blocknote/xl-ai";
 import { DefaultChatTransport } from "ai";
 import { en as aiEn, zh as aiZh } from "@blocknote/xl-ai/locales";
 import "@blocknote/xl-ai/style.css";
+import { EditorProvider } from "./contexts/editorContext";
 const App: React.FC = () => {
   async function uploadFile(file: File) {
     const body = new FormData();
@@ -133,49 +134,50 @@ const App: React.FC = () => {
 
   return (
     <ThemeBridge>
-      <div className="fixed-viewport">
-        <Toolbar editor={editor} />
-        <Splitter
-          style={{ flex: 1, height: "calc(100% - 48px)", overflow: "hidden" }}
-        >
-          <Splitter.Panel
-            className="sidebar-container sidebar-trigger"
-            style={{ overflow: "hidden" }}
-            collapsible={{ start: true, end: true }}
+      <EditorProvider editor={editor}>
+        <div className="fixed-viewport">
+          <Toolbar />
+          <Splitter
+            style={{ flex: 1, height: "calc(100% - 48px)", overflow: "hidden" }}
           >
-            <div className="sidebar-hidden sidebar-scrollable">
-              <Sidebar editor={editor} />
-            </div>
-          </Splitter.Panel>
-          <Splitter.Panel
-            className="main-content"
-            min="20%"
-            defaultSize="80%"
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              overflow: "hidden",
-            }}
-          >
-            <div
-              className="main-content-scrollable"
+            <Splitter.Panel
+              className="sidebar-container sidebar-trigger"
+              style={{ overflow: "hidden" }}
+              collapsible={{ start: true, end: true }}
+            >
+              <div className="sidebar-hidden sidebar-scrollable">
+                <Sidebar />
+              </div>
+            </Splitter.Panel>
+            <Splitter.Panel
+              className="main-content"
+              min="20%"
+              defaultSize="80%"
               style={{
-                padding: docId ? "15px 20px" : "0",
-                flex: 1,
-                overflow: "auto",
+                display: "flex",
+                flexDirection: "column",
+                overflow: "hidden",
               }}
             >
-              <Editor
-                key={lang}
-                editor={editor}
-                onSave={handleSave}
-                noteId={docId ?? undefined}
-              />
-            </div>
-            {docId && <Footbar editor={editor} />}
-          </Splitter.Panel>
-        </Splitter>
-      </div>
+              <div
+                className="main-content-scrollable"
+                style={{
+                  padding: docId ? "15px 20px" : "0",
+                  flex: 1,
+                  overflow: "auto",
+                }}
+              >
+                <Editor
+                  key={lang}
+                  onSave={handleSave}
+                  noteId={docId ?? undefined}
+                />
+              </div>
+              {docId && <Footbar />}
+            </Splitter.Panel>
+          </Splitter>
+        </div>
+      </EditorProvider>
     </ThemeBridge>
   );
 };

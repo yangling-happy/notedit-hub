@@ -1,8 +1,9 @@
-import { BlockNoteEditor } from "@blocknote/core";
 import { useWordCount } from "../../hooks/useWordCount";
 import { useTranslation } from "react-i18next";
+import { useEditor } from "../../contexts/editorContext";
 
-export const Footbar = ({ editor }: { editor: BlockNoteEditor }) => {
+export const Footbar = () => {
+  const editor = useEditor();
   const wordCount = useWordCount(editor);
   const { t } = useTranslation();
   return (
@@ -21,7 +22,10 @@ export const Footbar = ({ editor }: { editor: BlockNoteEditor }) => {
         flexShrink: 0,
       }}
     >
-      <span>{t("footbar.word_count")}{wordCount}</span>
+      <span>
+        {t("footbar.word_count")}
+        {wordCount}
+      </span>
     </div>
   );
 };

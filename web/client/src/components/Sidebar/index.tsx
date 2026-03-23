@@ -3,10 +3,10 @@ import { Segmented } from "antd";
 import { WikiList } from "./wikiList";
 import { Outline } from "./outLine";
 import { useTranslation } from "react-i18next";
-interface SidebarProps {
-  editor: any;
-}
-const Sidebar: React.FC<SidebarProps> = ({ editor }) => {
+import { useEditor } from "../../contexts/editorContext";
+
+const Sidebar: React.FC = () => {
+  const editor = useEditor();
   const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState(
     localStorage.getItem("activeTab") || "wiki",
@@ -34,11 +34,7 @@ const Sidebar: React.FC<SidebarProps> = ({ editor }) => {
         />
       </div>
       <div className="sidebar-scrollable">
-        {activeTab === "wiki" ? (
-          <WikiList />
-        ) : (
-          <Outline editor={editor} />
-        )}
+        {activeTab === "wiki" ? <WikiList /> : <Outline editor={editor} />}
       </div>
     </div>
   );
