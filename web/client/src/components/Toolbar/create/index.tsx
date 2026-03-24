@@ -2,7 +2,7 @@ import { Button, message } from "antd";
 import { useTranslation } from "react-i18next";
 import { PlusOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
-import { createDocument } from "../../../services/api";
+import { createDocument } from "../../../services/document";
 import { notifyDocumentsChanged } from "../../../constants/documentEvents";
 
 export const CreateButton = () => {

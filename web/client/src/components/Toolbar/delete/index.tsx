@@ -2,7 +2,7 @@ import { Button, message, Modal } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useParams } from "react-router-dom";
-import { deleteDocument, getAllDocuments } from "../../../services/api";
+import { deleteDocument, getAllDocuments } from "../../../services/document";
 import { notifyDocumentsChanged } from "../../../constants/documentEvents";
 
 export const DeleteButton = () => {

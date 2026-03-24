@@ -4,6 +4,7 @@ import type { Request, Response } from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 import documentRoutes from "./routes/documentRoutes.js";
+import authRoutes from './routes/authRoutes.js';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -25,6 +26,7 @@ app.use((req, res, next) => {
 
 // 3. 路由挂载 (必须在 listen 之前！)
 app.use("/api/documents", documentRoutes);
+app.use('/api/auth', authRoutes);
 
 // 4. 健康检查
 app.get("/health", (req: Request, res: Response) => {

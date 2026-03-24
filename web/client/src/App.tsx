@@ -12,7 +12,7 @@ import { ThemeBridge } from "./components/themeBridge";
 import { useTranslation } from "react-i18next";
 import "./locales/i18.ts";
 import { useParams } from "react-router-dom";
-import { getDocumentById, updateDocument } from "./services/api";
+import { getDocumentById, updateDocument } from "./services/document.ts";
 import { AIExtension, aiDocumentFormats } from "@blocknote/xl-ai";
 import { DefaultChatTransport } from "ai";
 import { en as aiEn, zh as aiZh } from "@blocknote/xl-ai/locales";

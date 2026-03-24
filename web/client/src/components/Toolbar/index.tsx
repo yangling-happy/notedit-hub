@@ -7,6 +7,7 @@ import { SaveButton } from "./save";
 import { CreateButton } from "./create";
 import { DeleteButton } from "./delete";
 import { useEditor } from "../../contexts/editorContext";
+import { UserMenu } from "./user";
 
 export const Toolbar = () => {
   const editor = useEditor();
@@ -27,6 +28,7 @@ export const Toolbar = () => {
       <div
         style={{ display: "flex", alignItems: "center", gap: "12px", flex: 1 }}
       >
+        <UserMenu />
         <File editor={editor} />
         <SearchPanel editor={editor} />
       </div>

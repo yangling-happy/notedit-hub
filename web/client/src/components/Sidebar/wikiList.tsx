@@ -2,7 +2,7 @@ import { useEffect, useState, useCallback } from "react";
 import { List, Typography, Skeleton } from "antd";
 import { FileTextOutlined } from "@ant-design/icons";
 import { useNavigate, useParams } from "react-router-dom";
-import { getAllDocuments } from "../../services/api";
+import { getAllDocuments } from "../../services/document";
 import { useTranslation } from "react-i18next";
 import { DOCUMENTS_CHANGED_EVENT } from "../../constants/documentEvents";
 

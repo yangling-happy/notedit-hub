@@ -7,9 +7,10 @@ import {
   updateDocument,
 } from "../controllers/documentController.js";
 import { handleAIChat } from "../controllers/aiController.js";
+import { auth } from "../middleware/auth.js";
 
 const router: express.Router = express.Router();
-
+router.use(auth);
 router.get("/", getAllDocuments);
 router.get("/:id", getDocumentById);
 router.post("/", createDocument);
