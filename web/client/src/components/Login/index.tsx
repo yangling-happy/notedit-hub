@@ -108,6 +108,7 @@ export const LoginPage = () => {
             <Input
               prefix={<UserOutlined style={{ color: "#bfbfbf" }} />}
               placeholder="用户名"
+              autoComplete="username"
             />
           </Form.Item>
 
@@ -123,6 +124,7 @@ export const LoginPage = () => {
             <Input.Password
               prefix={<LockOutlined style={{ color: "#bfbfbf" }} />}
               placeholder="密码"
+              autoComplete={mode === "login" ? "current-password" : "new-password"}
             />
           </Form.Item>
 
@@ -145,6 +147,7 @@ export const LoginPage = () => {
               <Input.Password
                 prefix={<LockOutlined style={{ color: "#bfbfbf" }} />}
                 placeholder="确认密码"
+                autoComplete="new-password"
               />
             </Form.Item>
           )}

@@ -4,6 +4,9 @@ import { visualizer } from "rollup-plugin-visualizer";
 
 // https://vite.dev/config/
 export default defineConfig({
+  resolve: {
+    dedupe: ["yjs"],
+  },
   plugins: [
     react(),
     visualizer({ open: true, filename: "bundle-stats.html" }) as PluginOption,

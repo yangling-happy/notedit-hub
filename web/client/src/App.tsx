@@ -65,6 +65,14 @@ const App: React.FC = () => {
         AIExtension({
           transport: new DefaultChatTransport({
             api: "http://localhost:3001/api/documents/chat",
+            headers: () => {
+              const token = localStorage.getItem("token");
+              const headers: Record<string, string> = {};
+              if (token) {
+                headers.Authorization = `Bearer ${token}`;
+              }
+              return headers;
+            },
             body: {
               systemPrompt: aiDocumentFormats.html.systemPrompt,
             },
