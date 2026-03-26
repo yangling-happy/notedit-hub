@@ -28,9 +28,6 @@ export const UserMenu = () => {
         style={{
           cursor: "pointer",
           userSelect: "none",
-          paddingRight: 8,
-          borderRight: "1px solid var(--toolbar-border-color)",
-          marginRight: 4,
         }}
       >
         <Avatar size="small" icon={<UserOutlined />} />
