@@ -1,15 +1,21 @@
 import { Avatar, Dropdown, Space, Typography } from "antd";
-import { DownOutlined, LogoutOutlined, UserOutlined } from "@ant-design/icons";
+import {
+  CaretDownOutlined,
+  LogoutOutlined,
+  UserOutlined,
+} from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { useAuth } from "../../../contexts/authContext";
+import { useTranslation } from "react-i18next";
 
 export const UserMenu = () => {
+  const { t } = useTranslation();
   const { user, logout } = useAuth();
 
   const items: MenuProps["items"] = [
     {
       key: "logout",
-      label: "退出登录",
+      label: t("user.logout"),
       icon: <LogoutOutlined />,
       danger: true,
       onClick: logout,
@@ -29,11 +35,9 @@ export const UserMenu = () => {
       >
         <Avatar size="small" icon={<UserOutlined />} />
         <Typography.Text style={{ marginBottom: 0 }}>
-          {user?.username ?? "用户"}
+          {user?.username ?? t("user.default_name")}
         </Typography.Text>
-        <DownOutlined
-          style={{ fontSize: 12, color: "var(--text-secondary-color)" }}
-        />
+        <CaretDownOutlined />
       </Space>
     </Dropdown>
   );

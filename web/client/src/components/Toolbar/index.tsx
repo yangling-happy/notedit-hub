@@ -3,7 +3,6 @@ import { GithubOutlined } from "@ant-design/icons";
 import { ModeToggle } from "./modeToogle";
 import { SearchPanel } from "./search";
 import { LanguageSwitcher } from "./i18";
-import { SaveButton } from "./save";
 import { CreateButton } from "./create";
 import { DeleteButton } from "./delete";
 import { useEditor } from "../../contexts/editorContext";
@@ -28,9 +27,9 @@ export const Toolbar = () => {
       <div
         style={{ display: "flex", alignItems: "center", gap: "12px", flex: 1 }}
       >
-        <UserMenu />
         <File editor={editor} />
-        <SearchPanel editor={editor} />
+        <CreateButton />
+        <DeleteButton />
       </div>
 
       <div
@@ -53,9 +52,7 @@ export const Toolbar = () => {
           justifyContent: "flex-end",
         }}
       >
-        <CreateButton />
-        <SaveButton />
-        <DeleteButton />
+        <SearchPanel editor={editor} />
         <LanguageSwitcher />
         <ModeToggle />
         <a
@@ -69,6 +66,7 @@ export const Toolbar = () => {
         >
           <GithubOutlined />
         </a>
+        <UserMenu />
       </div>
     </div>
   );

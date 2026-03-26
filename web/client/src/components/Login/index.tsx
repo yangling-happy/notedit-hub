@@ -12,6 +12,7 @@ import { useAuth } from "../../contexts/authContext";
 import { loginApi, registerApi } from "../../services/auth";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 const { Title } = Typography;
 
@@ -22,6 +23,7 @@ interface LoginFormValues {
 }
 
 export const LoginPage = () => {
+  const { t } = useTranslation();
   const { login } = useAuth();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
@@ -40,12 +42,18 @@ export const LoginPage = () => {
         mode === "login" ? await loginApi(payload) : await registerApi(payload);
 
       login(res.data.token, res.data.user);
-      message.success(mode === "login" ? "登录成功" : "注册成功，已自动登录");
+      message.success(
+        mode === "login"
+          ? t("auth.login_success")
+          : t("auth.register_success_auto_login"),
+      );
       navigate("/wiki", { replace: true });
     } catch (err: any) {
       message.error(
         err.response?.data?.message ||
-          (mode === "login" ? "登录失败，请检查凭据" : "注册失败，请稍后再试"),
+          (mode === "login"
+            ? t("auth.login_failed_check_credentials")
+            : t("auth.register_failed_try_later")),
       );
     } finally {
       setLoading(false);
@@ -76,7 +84,9 @@ export const LoginPage = () => {
           >
             NOTEDIT
           </Title>
-          <Typography.Text type="secondary">请登录您的账号</Typography.Text>
+          <Typography.Text type="secondary">
+            {t("auth.login_prompt")}
+          </Typography.Text>
         </div>
 
         <div style={{ marginBottom: 16 }}>
@@ -88,8 +98,8 @@ export const LoginPage = () => {
               form.resetFields(["password", "confirmPassword"]);
             }}
             options={[
-              { label: "登录", value: "login" },
-              { label: "注册", value: "register" },
+              { label: t("auth.mode_login"), value: "login" },
+              { label: t("auth.mode_register"), value: "register" },
             ]}
           />
         </div>
@@ -103,11 +113,13 @@ export const LoginPage = () => {
         >
           <Form.Item
             name="username"
-            rules={[{ required: true, message: "请输入用户名" }]}
+            rules={[
+              { required: true, message: t("auth.validation_enter_username") },
+            ]}
           >
             <Input
               prefix={<UserOutlined style={{ color: "#bfbfbf" }} />}
-              placeholder="用户名"
+              placeholder={t("auth.username_placeholder")}
               autoComplete="username"
             />
           </Form.Item>
@@ -115,16 +127,18 @@ export const LoginPage = () => {
           <Form.Item
             name="password"
             rules={[
-              { required: true, message: "请输入密码" },
+              { required: true, message: t("auth.validation_enter_password") },
               ...(mode === "register"
-                ? [{ min: 6, message: "密码至少 6 个字符" }]
+                ? [{ min: 6, message: t("auth.validation_password_min") }]
                 : []),
             ]}
           >
             <Input.Password
               prefix={<LockOutlined style={{ color: "#bfbfbf" }} />}
-              placeholder="密码"
-              autoComplete={mode === "login" ? "current-password" : "new-password"}
+              placeholder={t("auth.password_placeholder")}
+              autoComplete={
+                mode === "login" ? "current-password" : "new-password"
+              }
             />
           </Form.Item>
 
@@ -133,20 +147,25 @@ export const LoginPage = () => {
               name="confirmPassword"
               dependencies={["password"]}
               rules={[
-                { required: true, message: "请再次输入密码" },
+                {
+                  required: true,
+                  message: t("auth.validation_confirm_password"),
+                },
                 ({ getFieldValue }) => ({
                   validator(_, value) {
                     if (!value || getFieldValue("password") === value) {
                       return Promise.resolve();
                     }
-                    return Promise.reject(new Error("两次输入的密码不一致"));
+                    return Promise.reject(
+                      new Error(t("auth.validation_password_mismatch")),
+                    );
                   },
                 }),
               ]}
             >
               <Input.Password
                 prefix={<LockOutlined style={{ color: "#bfbfbf" }} />}
-                placeholder="确认密码"
+                placeholder={t("auth.confirm_password_placeholder")}
                 autoComplete="new-password"
               />
             </Form.Item>
@@ -160,7 +179,9 @@ export const LoginPage = () => {
               loading={loading}
               style={{ backgroundColor: "#000", borderColor: "#000" }} // 强制黑白风格
             >
-              {mode === "login" ? "登录" : "注册并登录"}
+              {mode === "login"
+                ? t("auth.submit_login")
+                : t("auth.submit_register_and_login")}
             </Button>
           </Form.Item>
         </Form>

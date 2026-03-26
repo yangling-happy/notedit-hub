@@ -2,7 +2,7 @@ import { Segmented } from "antd";
 import { useTranslation } from "react-i18next";
 
 export const LanguageSwitcher = () => {
-  const { i18n } = useTranslation();
+  const { i18n, t } = useTranslation();
 
   const currentLang = i18n.language?.startsWith("en") ? "en" : "zh";
 
@@ -12,11 +12,11 @@ export const LanguageSwitcher = () => {
 
   return (
     <Segmented
-      value={currentLang} 
+      value={currentLang}
       onChange={handleLangChange}
       options={[
-        { label: "中", value: "zh" },
-        { label: "En", value: "en" },
+        { label: t("language.zh_short"), value: "zh" },
+        { label: t("language.en_short"), value: "en" },
       ]}
     />
   );

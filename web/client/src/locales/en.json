@@ -47,6 +47,33 @@
     "delete_failed": "Delete failed",
     "delete_no_document": "No document selected to delete"
   },
+  "auth": {
+    "login_success": "Login successful",
+    "register_success_auto_login": "Registration successful, auto-logged in",
+    "login_failed_check_credentials": "Login failed, please check your credentials",
+    "register_failed_try_later": "Registration failed, please try again later",
+    "login_prompt": "Please log in to your account",
+    "mode_login": "Login",
+    "mode_register": "Register",
+    "validation_enter_username": "Please enter username",
+    "validation_enter_password": "Please enter password",
+    "validation_password_min": "Password must be at least 6 characters",
+    "validation_confirm_password": "Please confirm your password",
+    "validation_password_mismatch": "The two passwords do not match",
+    "username_placeholder": "Username",
+    "password_placeholder": "Password",
+    "confirm_password_placeholder": "Confirm password",
+    "submit_login": "Login",
+    "submit_register_and_login": "Register & Login"
+  },
+  "language": {
+    "zh_short": "中",
+    "en_short": "En"
+  },
+  "user": {
+    "logout": "Log out",
+    "default_name": "User"
+  },
   "welcome": {
     "title": "Welcome to NOTEDIT",
     "subtitle": "Start creating your first document, record ideas, thoughts and notes.",

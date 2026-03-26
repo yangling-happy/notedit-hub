@@ -47,6 +47,33 @@
     "delete_failed": "删除失败",
     "delete_no_document": "当前没有可删除的文档"
   },
+  "auth": {
+    "login_success": "登录成功",
+    "register_success_auto_login": "注册成功，已自动登录",
+    "login_failed_check_credentials": "登录失败，请检查凭据",
+    "register_failed_try_later": "注册失败，请稍后再试",
+    "login_prompt": "请登录您的账号",
+    "mode_login": "登录",
+    "mode_register": "注册",
+    "validation_enter_username": "请输入用户名",
+    "validation_enter_password": "请输入密码",
+    "validation_password_min": "密码至少 6 个字符",
+    "validation_confirm_password": "请再次输入密码",
+    "validation_password_mismatch": "两次输入的密码不一致",
+    "username_placeholder": "用户名",
+    "password_placeholder": "密码",
+    "confirm_password_placeholder": "确认密码",
+    "submit_login": "登录",
+    "submit_register_and_login": "注册并登录"
+  },
+  "language": {
+    "zh_short": "中",
+    "en_short": "En"
+  },
+  "user": {
+    "logout": "退出登录",
+    "default_name": "用户"
+  },
   "welcome": {
     "title": "欢迎来到 NOTEDIT",
     "subtitle": "开始创建您的第一个文档，记录灵感、想法和笔记。",
