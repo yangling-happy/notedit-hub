@@ -127,12 +127,20 @@ const App: React.FC = () => {
   // 防抖保存：编辑 1s 后自动同步到 MongoDB
   const saveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const handleSave = useCallback(
-    (note: { id: string; content: any[]; updatedAt: number }) => {
+    (note: {
+      id: string;
+      title: string;
+      content: any[];
+      updatedAt: number;
+    }) => {
       const currentDocId = docIdRef.current;
       if (!currentDocId) return;
       if (saveTimerRef.current) clearTimeout(saveTimerRef.current);
       saveTimerRef.current = setTimeout(() => {
-        updateDocument(currentDocId, { content: note.content }).catch(() => {});
+        updateDocument(currentDocId, {
+          title: note.title,
+          content: note.content,
+        }).catch(() => {});
       }, 1000);
     },
     [],

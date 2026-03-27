@@ -18,9 +18,15 @@ import {
   getFormattingToolbarItems,
 } from "@blocknote/react";
 import { useEditor } from "../../contexts/editorContext";
+import { extractTitle } from "../../utils/blockNoteUtils";
 
 interface EditorProps {
-  onSave?: (content: any) => void;
+  onSave?: (data: {
+    id: string;
+    title: string;
+    content: any;
+    updatedAt: number;
+  }) => void;
   noteId?: string;
 }
 
@@ -30,11 +36,19 @@ export default function Editor({ onSave, noteId }: EditorProps) {
   const themeValue = resolvedTheme === "dark" ? "dark" : "light";
   const handleSave = useCallback(() => {
     if (onSave && noteId) {
+      const blocks = editor.document;
+      const title = extractTitle(blocks);
       onSave({
         id: noteId,
-        content: editor.document,
+        title: title,
+        content: blocks,
         updatedAt: Date.now(),
       });
+      window.dispatchEvent(
+        new CustomEvent("WIKI_TITLE_UPDATED", {
+          detail: { id: noteId, title },
+        }),
+      );
     }
   }, [onSave, noteId, editor.document]);
 
@@ -47,14 +61,12 @@ export default function Editor({ onSave, noteId }: EditorProps) {
       editor={editor}
       theme={themeValue}
       onChange={handleSave}
-      // 禁用默认 UI，因为我们要用 Controller 手动挂载 AI 零件
+      // 禁用默认 UI，用 Controller手动挂载 AI 零件
       formattingToolbar={false}
       slashMenu={false}
     >
-      {/* A. AI 核心控制器（必放） */}
       <AIMenuController />
 
-      {/* B. 自定义格式化工具栏：把 AI 按钮塞进去 */}
       <FormattingToolbarController
         formattingToolbar={() => (
           <FormattingToolbar>
@@ -64,7 +76,6 @@ export default function Editor({ onSave, noteId }: EditorProps) {
         )}
       />
 
-      {/* C. 自定义斜杠菜单：把 AI 选项合并进去 */}
       <SuggestionMenuController
         triggerCharacter="/"
         getItems={async (query) =>

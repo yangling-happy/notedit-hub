@@ -50,7 +50,19 @@ export const WikiList = () => {
       );
     };
   }, [fetchDocs]);
+  useEffect(() => {
+    const handleUpdate = (e: any) => {
+      const { id, title } = e.detail;
+      setDocs((prevDocs) =>
+        prevDocs.map((doc) =>
+          doc._id === id ? { ...doc, title: title } : doc,
+        ),
+      );
+    };
 
+    window.addEventListener("WIKI_TITLE_UPDATED", handleUpdate);
+    return () => window.removeEventListener("WIKI_TITLE_UPDATED", handleUpdate);
+  }, []);
   return (
     <div
       style={{
