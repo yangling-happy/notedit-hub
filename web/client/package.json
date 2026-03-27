@@ -1,4 +1,14 @@
 {
+  "pnpm": {
+    "overrides": {
+      "lexical": "0.14.5",
+      "@lexical/selection": "0.14.5",
+      "@lexical/utils": "0.14.5",
+      "@lexical/rich-text": "0.14.5",
+      "@lexical/plain-text": "0.14.5",
+      "@lexical/history": "0.14.5"
+    }
+  },
   "name": "client",
   "private": true,
   "version": "0.0.0",
@@ -15,8 +25,8 @@
     "@blocknote/mantine": "^0.47.2",
     "@blocknote/react": "^0.47.2",
     "@blocknote/xl-ai": "0.47.2",
-    "@blocknote/xl-docx-exporter": "^0.47.1",
-    "@blocknote/xl-pdf-exporter": "^0.47.1",
+    "@blocknote/xl-docx-exporter": "0.47.2",
+    "@blocknote/xl-pdf-exporter": "0.47.2",
     "@mantine/core": "^8.3.16",
     "@mantine/hooks": "^8.3.16",
     "@mantine/utils": "^6.0.22",

@@ -1,4 +1,4 @@
-import React, { createContext, useContext } from "react";
+import React, { createContext, useContext, useMemo } from "react";
 import type { ReactNode } from "react";
 import { BlockNoteEditor } from "@blocknote/core";
 
@@ -17,10 +17,9 @@ export const EditorProvider: React.FC<EditorProviderProps> = ({
   children,
   editor,
 }) => {
+  const value = useMemo(() => ({ editor }), [editor]);
   return (
-    <EditorContext.Provider value={{ editor }}>
-      {children}
-    </EditorContext.Provider>
+    <EditorContext.Provider value={value}>{children}</EditorContext.Provider>
   );
 };
 

@@ -5,7 +5,7 @@ import { visualizer } from "rollup-plugin-visualizer";
 // https://vite.dev/config/
 export default defineConfig({
   resolve: {
-    dedupe: ["yjs"],
+    dedupe: ["lexical", "@lexical/selection", "@lexical/utils", "yjs"],
   },
   plugins: [
     react(),
