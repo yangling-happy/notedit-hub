@@ -147,6 +147,12 @@ importers:
       '@ai-sdk/openai':
         specifier: ^3.0.47
         version: 3.0.47(zod@4.3.6)
+      '@hocuspocus/extension-logger':
+        specifier: ^3.4.4
+        version: 3.4.4(y-protocols@1.0.7(yjs@13.6.30))(yjs@13.6.30)
+      '@hocuspocus/server':
+        specifier: ^3.4.4
+        version: 3.4.4(y-protocols@1.0.7(yjs@13.6.30))(yjs@13.6.30)
       ai:
         specifier: ^6.0.134
         version: 6.0.134(zod@4.3.6)
@@ -162,12 +168,18 @@ importers:
       express:
         specifier: ^5.2.1
         version: 5.2.1
+      express-ws:
+        specifier: ^5.0.2
+        version: 5.0.2(express@5.2.1)
       jsonwebtoken:
         specifier: ^9.0.3
         version: 9.0.3
       mongoose:
         specifier: ^9.3.0
         version: 9.3.0
+      ws:
+        specifier: ^8.20.0
+        version: 8.20.0
     devDependencies:
       '@types/bcrypt':
         specifier: ^6.0.0
@@ -178,6 +190,9 @@ importers:
       '@types/express':
         specifier: ^5.0.6
         version: 5.0.6
+      '@types/express-ws':
+        specifier: ^3.0.6
+        version: 3.0.6
       '@types/jsonwebtoken':
         specifier: ^9.0.10
         version: 9.0.10
@@ -187,6 +202,9 @@ importers:
       '@types/node':
         specifier: ^24.11.0
         version: 24.11.0
+      '@types/ws':
+        specifier: ^8.18.1
+        version: 8.18.1
       nodemon:
         specifier: ^3.1.14
         version: 3.1.14
@@ -639,6 +657,18 @@ packages:
       prosemirror-state: ^1.0.0
       prosemirror-transform: ^1.0.0
       prosemirror-view: ^1.0.0
+
+  '@hocuspocus/common@3.4.4':
+    resolution: {integrity: sha512-RykIJ0tsHHMP4Xk+4UCbc7SO5LgGxGUSTdbh6anJEsaALAyqinf1Nn5HYuMjLPolAmsar1v++m9zufR09NLpXA==}
+
+  '@hocuspocus/extension-logger@3.4.4':
+    resolution: {integrity: sha512-GEnjmvQlrDlr5hoTQ8NHStZkzpL42wkwZ5XOBMkEX/TgqcnEtKCK1SOK0xj+px9tEHaflDLtCq6f5oy4gOCkPQ==}
+
+  '@hocuspocus/server@3.4.4':
+    resolution: {integrity: sha512-UV+oaONAejOzeYgUygNcgsc8RdZvSokVvAxluZJIisLACpRO/VsseQ5lWKDRwLd7Fn6+rHWDH3hGuQ1fdX1Ycg==}
+    peerDependencies:
+      y-protocols: ^1.0.6
+      yjs: ^13.6.8
 
   '@humanfs/core@0.19.1':
     resolution: {integrity: sha512-5DyQ4+1JEUzejeK1JGICcideyfUbGixgS9jNgex5nqkW+cY7WZhxBigmieN5Qnw9ZosSNVC9KQKyb+GUaGyKUA==}
@@ -1319,6 +1349,9 @@ packages:
   '@types/express-serve-static-core@5.1.1':
     resolution: {integrity: sha512-v4zIMr/cX7/d2BpAEX3KNKL/JrT1s43s96lLvvdTmza1oEvDudCqK9aF/djc/SWgy8Yh0h30TZx5VpzqFCxk5A==}
 
+  '@types/express-ws@3.0.6':
+    resolution: {integrity: sha512-6ZDt+tMEQgM4RC1sMX1fIO7kHQkfUDlWfxoPddXUeeDjmc+Yt/fCzqXfp8rFahNr5eIxdomrWphLEWDkB2q3UQ==}
+
   '@types/express@5.0.6':
     resolution: {integrity: sha512-sKYVuV7Sv9fbPIt/442koC7+IIwK5olP1KWeD88e/idgoJqDm3JV/YUiPwkoKK92ylff2MGxSz1CSjsXelx0YA==}
 
@@ -1402,6 +1435,9 @@ packages:
 
   '@types/whatwg-url@13.0.0':
     resolution: {integrity: sha512-N8WXpbE6Wgri7KUSvrmQcqrMllKZ9uxkYWMt+mCSGwNc0Hsw9VQTW7ApqI4XNrx6/SaM2QQJCzMPDEXE058s+Q==}
+
+  '@types/ws@8.18.1':
+    resolution: {integrity: sha512-ThVF6DCVhA8kUGy+aazFQ4kXQ7E1Ty7A3ypFOe0IcJV8O/M511G99AW24irKrW56Wt44yG9+ij8FaqoBGkuBXg==}
 
   '@typescript-eslint/eslint-plugin@8.56.1':
     resolution: {integrity: sha512-Jz9ZztpB37dNC+HU2HI28Bs9QXpzCz+y/twHOwhyrIRdbuVDxSytJNDl6z/aAKlaRIwC7y8wJdkBv7FxYGgi0A==}
@@ -1532,6 +1568,12 @@ packages:
 
   argparse@2.0.1:
     resolution: {integrity: sha512-8+9WqebbFzpX9OR+Wa6O29asIogeRMzcGtAINdpMHHyAg10f05aSFVBbcEqGf/PXw1EjAZ+q2/bEBg3DvurK3Q==}
+
+  async-lock@1.4.1:
+    resolution: {integrity: sha512-Az2ZTpuytrtqENulXwO3GGv1Bztugx6TT37NIo7imr/Qo0gsYiGtSdBa2B6fsXhTpVZDNfu1Qn3pk531e3q+nQ==}
+
+  async-mutex@0.5.0:
+    resolution: {integrity: sha512-1A94B18jkJ3DYq284ohPxoXbfTA5HsQ7/Mf4DEhcyLx3Bz27Rh59iScbB6EPiP+B+joue6YCxcMXSbFC1tZKwA==}
 
   asynckit@0.4.0:
     resolution: {integrity: sha512-Oei9OH4tRh0YqU3GxhX79dM/mwVgvbZJaSNaRk+bshkj0S5cfHcgYakreBjrHwatXKbz+IoIdYLxrKim2MjW0Q==}
@@ -1946,6 +1988,12 @@ packages:
   eventsource-parser@3.0.6:
     resolution: {integrity: sha512-Vo1ab+QXPzZ4tCa8SwIHJFaSzy4R6SHf7BY79rFBDf0idraZWAkYrDjDj8uWaSm3S2TK+hJ7/t1CEmZ7jXw+pg==}
     engines: {node: '>=18.0.0'}
+
+  express-ws@5.0.2:
+    resolution: {integrity: sha512-0uvmuk61O9HXgLhGl3QhNSEtRsQevtmbL94/eILaliEADZBHZOQUAiHFrGPrgsjikohyrmSG5g+sCfASTt0lkQ==}
+    engines: {node: '>=4.5.0'}
+    peerDependencies:
+      express: ^4.0.0 || ^5.0.0-alpha.1
 
   express@5.2.1:
     resolution: {integrity: sha512-hIS4idWWai69NezIdRt2xFVofaF4j+6INOpJlVOLDO8zXGpUVEVzIYk12UUi2JzjEzWL3IOAxcTubgz9Po0yXw==}
@@ -2363,6 +2411,10 @@ packages:
 
   keyv@4.5.4:
     resolution: {integrity: sha512-oxVHkHR/EJf2CNXnWxRLW6mg7JyCCUcG0DtEGmL2ctUo1PNTin1PUil+r/+4r5MpVgC/fn1kjsx7mjSujKqIpw==}
+
+  kleur@4.1.5:
+    resolution: {integrity: sha512-o+NO+8WrRiQEE4/7nwRJhN1HWpVmJm511pBHUxPLtp0BUISzlBplORYSmTclCnJvQq2tKu/sgl3xVpkc7ZWuQQ==}
+    engines: {node: '>=6'}
 
   levn@0.4.1:
     resolution: {integrity: sha512-+bT2uH4E5LGE7h/n3evcS/sQlJXCpIp6ym8OWJ5eV6+67Dsql/LaaT7qJBAt2rzfoa/5QBGBhxDix1dMt2kQKQ==}
@@ -3614,6 +3666,30 @@ packages:
   wrappy@1.0.2:
     resolution: {integrity: sha512-l4Sp/DRseor9wL6EvV2+TuQn63dMkPjZ/sp9XkghTEbV9KlPS1xUsZ3u7/IQO4wxtcFB4bgpQPRcR3QCvezPcQ==}
 
+  ws@7.5.10:
+    resolution: {integrity: sha512-+dbF1tHwZpXcbOJdVOkzLDxZP1ailvSxM6ZweXTegylPny803bFhA+vqBYw4s31NSAk4S2Qz+AKXK9a4wkdjcQ==}
+    engines: {node: '>=8.3.0'}
+    peerDependencies:
+      bufferutil: ^4.0.1
+      utf-8-validate: ^5.0.2
+    peerDependenciesMeta:
+      bufferutil:
+        optional: true
+      utf-8-validate:
+        optional: true
+
+  ws@8.20.0:
+    resolution: {integrity: sha512-sAt8BhgNbzCtgGbt2OxmpuryO63ZoDk/sqaB/znQm94T4fCEsy/yV+7CdC1kJhOU9lboAEU7R3kquuycDoibVA==}
+    engines: {node: '>=10.0.0'}
+    peerDependencies:
+      bufferutil: ^4.0.1
+      utf-8-validate: '>=5.0.2'
+    peerDependenciesMeta:
+      bufferutil:
+        optional: true
+      utf-8-validate:
+        optional: true
+
   wsl-utils@0.3.1:
     resolution: {integrity: sha512-g/eziiSUNBSsdDJtCLB8bdYEUMj4jR7AGeUo96p/3dTafgjHhpF4RiCFPiRILwjQoDXx5MqkBr4fwWtR3Ky4Wg==}
     engines: {node: '>=20'}
@@ -4267,6 +4343,33 @@ snapshots:
       prosemirror-state: 1.4.4
       prosemirror-transform: 1.11.0
       prosemirror-view: 1.41.6
+
+  '@hocuspocus/common@3.4.4':
+    dependencies:
+      lib0: 0.2.117
+
+  '@hocuspocus/extension-logger@3.4.4(y-protocols@1.0.7(yjs@13.6.30))(yjs@13.6.30)':
+    dependencies:
+      '@hocuspocus/server': 3.4.4(y-protocols@1.0.7(yjs@13.6.30))(yjs@13.6.30)
+    transitivePeerDependencies:
+      - bufferutil
+      - utf-8-validate
+      - y-protocols
+      - yjs
+
+  '@hocuspocus/server@3.4.4(y-protocols@1.0.7(yjs@13.6.30))(yjs@13.6.30)':
+    dependencies:
+      '@hocuspocus/common': 3.4.4
+      async-lock: 1.4.1
+      async-mutex: 0.5.0
+      kleur: 4.1.5
+      lib0: 0.2.117
+      ws: 8.20.0
+      y-protocols: 1.0.7(yjs@13.6.30)
+      yjs: 13.6.30
+    transitivePeerDependencies:
+      - bufferutil
+      - utf-8-validate
 
   '@humanfs/core@0.19.1': {}
 
@@ -5038,6 +5141,12 @@ snapshots:
       '@types/range-parser': 1.2.7
       '@types/send': 1.2.1
 
+  '@types/express-ws@3.0.6':
+    dependencies:
+      '@types/express': 5.0.6
+      '@types/express-serve-static-core': 5.1.1
+      '@types/ws': 8.18.1
+
   '@types/express@5.0.6':
     dependencies:
       '@types/body-parser': 1.19.6
@@ -5130,6 +5239,10 @@ snapshots:
   '@types/whatwg-url@13.0.0':
     dependencies:
       '@types/webidl-conversions': 7.0.3
+
+  '@types/ws@8.18.1':
+    dependencies:
+      '@types/node': 24.11.0
 
   '@typescript-eslint/eslint-plugin@8.56.1(@typescript-eslint/parser@8.56.1(eslint@9.39.3)(typescript@5.9.3))(eslint@9.39.3)(typescript@5.9.3)':
     dependencies:
@@ -5343,6 +5456,12 @@ snapshots:
   arg@4.1.3: {}
 
   argparse@2.0.1: {}
+
+  async-lock@1.4.1: {}
+
+  async-mutex@0.5.0:
+    dependencies:
+      tslib: 2.8.1
 
   asynckit@0.4.0: {}
 
@@ -5769,6 +5888,14 @@ snapshots:
   events@3.3.0: {}
 
   eventsource-parser@3.0.6: {}
+
+  express-ws@5.0.2(express@5.2.1):
+    dependencies:
+      express: 5.2.1
+      ws: 7.5.10
+    transitivePeerDependencies:
+      - bufferutil
+      - utf-8-validate
 
   express@5.2.1:
     dependencies:
@@ -6258,6 +6385,8 @@ snapshots:
   keyv@4.5.4:
     dependencies:
       json-buffer: 3.0.1
+
+  kleur@4.1.5: {}
 
   levn@0.4.1:
     dependencies:
@@ -7673,6 +7802,10 @@ snapshots:
       strip-ansi: 7.2.0
 
   wrappy@1.0.2: {}
+
+  ws@7.5.10: {}
+
+  ws@8.20.0: {}
 
   wsl-utils@0.3.1:
     dependencies:
