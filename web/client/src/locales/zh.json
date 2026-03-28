@@ -1,6 +1,13 @@
 {
   "footbar": {
-    "word_count": "字符数（不计空格）："
+    "word_count": "字符数（不计空格）：",
+    "collab_disabled": "● 未启用协同",
+    "collab_connecting": "● 协同连接中",
+    "collab_connected": "● 协同已连接",
+    "collab_disconnected": "● 协同已断开"
+  },
+  "file": {
+    "import_markdown_prompt": "请选择一个 Markdown 文件进行导入"
   },
   "filelist": {
     "untitled": "无标题"
@@ -45,7 +52,15 @@
     "create_failed": "创建失败",
     "delete_success": "文档删除成功",
     "delete_failed": "删除失败",
-    "delete_no_document": "当前没有可删除的文档"
+    "delete_no_document": "当前没有可删除的文档",
+    "loading": "加载中..."
+  },
+  "error": {
+    "import_failed": "导入失败:",
+    "export_processor_not_found": "未找到对应的导出处理器，Key: {{key}}",
+    "export_failed": "文件导出失败:",
+    "load_data_failed": "加载数据失败",
+    "save_data_failed": "保存数据失败"
   },
   "auth": {
     "login_success": "登录成功",

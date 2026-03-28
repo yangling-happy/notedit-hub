@@ -1,6 +1,13 @@
 {
   "footbar": {
-    "word_count": "Number of characters (excluding spaces): "
+    "word_count": "Number of characters (excluding spaces): ",
+    "collab_disabled": "● Collaboration disabled",
+    "collab_connecting": "● Connecting collaboration",
+    "collab_connected": "● Collaboration connected",
+    "collab_disconnected": "● Collaboration disconnected"
+  },
+  "file": {
+    "import_markdown_prompt": "Please select a Markdown file to import"
   },
   "filelist": {
     "untitled": "Untitled"
@@ -45,7 +52,15 @@
     "create_failed": "Create failed",
     "delete_success": "Document deleted successfully",
     "delete_failed": "Delete failed",
-    "delete_no_document": "No document selected to delete"
+    "delete_no_document": "No document selected to delete",
+    "loading": "Loading..."
+  },
+  "error": {
+    "import_failed": "Import failed:",
+    "export_processor_not_found": "No export processor found for key: {{key}}",
+    "export_failed": "File export failed:",
+    "load_data_failed": "Failed to load data",
+    "save_data_failed": "Failed to save data"
   },
   "auth": {
     "login_success": "Login successful",

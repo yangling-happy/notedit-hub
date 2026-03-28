@@ -5,9 +5,8 @@ import Editor from "./components/Editor";
 import { Toolbar } from "./components/Toolbar";
 import { Footbar } from "./components/Footbar";
 import "./styles/global.css";
-import { useCreateBlockNote } from "@blocknote/react";
 import { en, zh } from "@blocknote/core/locales";
-import { useEffect, useState, useCallback, useRef } from "react";
+import { useEffect, useState, useCallback, useRef, useMemo } from "react";
 import { ThemeBridge } from "./components/themeBridge";
 import { useTranslation } from "react-i18next";
 import "./locales/i18.ts";
@@ -18,8 +17,34 @@ import { DefaultChatTransport } from "ai";
 import { en as aiEn, zh as aiZh } from "@blocknote/xl-ai/locales";
 import "@blocknote/xl-ai/style.css";
 import { EditorProvider } from "./contexts/editorContext";
+import { useCollaboration } from "./hooks/useCollaboration";
+import { useAuth } from "./contexts/authContext";
+
+const COLLAB_COLORS = [
+  "#e03131",
+  "#2f9e44",
+  "#1971c2",
+  "#f08c00",
+  "#7b2cbf",
+  "#0b7285",
+  "#c2255c",
+  "#5c940d",
+];
+
+const getColorByName = (name: string) => {
+  let hash = 0;
+  for (let i = 0; i < name.length; i += 1) {
+    hash = (hash << 5) - hash + name.charCodeAt(i);
+    hash |= 0;
+  }
+  const index = Math.abs(hash) % COLLAB_COLORS.length;
+  return COLLAB_COLORS[index];
+};
+
 const App: React.FC = () => {
-  async function uploadFile(file: File) {
+  const { user } = useAuth();
+
+  const uploadFile = useCallback(async (file: File) => {
     const body = new FormData();
     body.append("file", file);
     const ret = await fetch("https://tmpfiles.org/api/v1/upload", {
@@ -30,12 +55,14 @@ const App: React.FC = () => {
       "tmpfiles.org/",
       "tmpfiles.org/dl/",
     );
-  }
+  }, []);
 
-  const { i18n, ready } = useTranslation();
+  const { i18n, ready, t } = useTranslation();
   const [lang, setLang] = useState(i18n.language);
 
   const { docId } = useParams<{ docId: string }>();
+  const userName = user?.username ?? t("user.default_name");
+  const userColor = useMemo(() => getColorByName(userName), [userName]);
 
   const docIdRef = useRef(docId);
   useEffect(() => {
@@ -54,8 +81,8 @@ const App: React.FC = () => {
     };
   }, [i18n]);
 
-  const editor = useCreateBlockNote(
-    {
+  const editorOptions = useMemo(
+    () => ({
       dictionary: {
         ...(lang === "zh" ? zh : en),
         ai: lang === "zh" ? aiZh : aiEn,
@@ -88,9 +115,16 @@ const App: React.FC = () => {
             aiDocumentFormats.html.defaultDocumentStateBuilder,
         }),
       ],
-    },
-    [lang],
+    }),
+    [lang, uploadFile],
   );
+
+  const { editor, status: collaborationStatus } = useCollaboration({
+    docId,
+    userName,
+    userColor,
+    editorOptions,
+  });
 
   useEffect(() => {
     if (editor && docId) editor.focus();
@@ -146,7 +180,7 @@ const App: React.FC = () => {
     [],
   );
 
-  if (!ready) return <div>Loading...</div>;
+  if (!ready) return <div>{t("common.loading")}</div>;
 
   return (
     <ThemeBridge>
@@ -189,7 +223,7 @@ const App: React.FC = () => {
                   noteId={docId ?? undefined}
                 />
               </div>
-              {docId && <Footbar />}
+              {docId && <Footbar collaborationStatus={collaborationStatus} />}
             </Splitter.Panel>
           </Splitter>
         </div>

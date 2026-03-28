@@ -1,13 +1,16 @@
 import { BlockNoteEditor } from "@blocknote/core";
 import { clearEditor } from "../utils/clearEditor";
 import { useCallback } from "react";
+import { useTranslation } from "react-i18next";
 
 export const useFileImport = (editor: BlockNoteEditor | null) => {
+  const { t } = useTranslation();
+
   const importFile = useCallback(
     async (file: File) => {
       if (!editor) return;
       if (!file.name.endsWith(".md")) {
-        alert("请选择一个Markdown文件进行导入");
+        alert(t("file.import_markdown_prompt"));
         return;
       }
       try {
@@ -20,10 +23,10 @@ export const useFileImport = (editor: BlockNoteEditor | null) => {
           blocks,
         );
       } catch (error) {
-        console.error("导入失败:", error);
+        console.error(t("error.import_failed"), error);
       }
     },
-    [editor],
+    [editor, t],
   );
 
   return { importFile };
