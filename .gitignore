@@ -34,3 +34,4 @@ Thumbs.db
 *.sw?
 
 /web/server/dist
+/web/server/uploads/

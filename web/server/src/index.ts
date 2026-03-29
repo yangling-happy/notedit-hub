@@ -4,8 +4,10 @@ import expressWs from "express-ws";
 import type { Request, Response } from "express";
 import mongoose from "mongoose";
 import cors from "cors";
+import path from "node:path";
 import documentRoutes from "./routes/documentRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
+import uploadRoutes from "./routes/uploadRoutes.js";
 import http from "http";
 import { createWebSocketHandler } from "./collaboration/index.js";
 
@@ -26,6 +28,7 @@ app.use(
 );
 
 app.use(express.json());
+app.use("/uploads", express.static(path.resolve(process.cwd(), "uploads")));
 
 // 3. 初始化协作服务
 const wsHandler = createWebSocketHandler();
@@ -40,6 +43,7 @@ app.use((req, res, next) => {
 // 5. 路由挂载
 app.use("/api/documents", documentRoutes);
 app.use("/api/auth", authRoutes);
+app.use("/api/uploads", uploadRoutes);
 
 // 6. 健康检查
 app.get("/health", (req: Request, res: Response) => {

@@ -20,6 +20,7 @@ import { EditorProvider } from "./contexts/editorContext";
 import { useCollaboration } from "./hooks/useCollaboration";
 import { useAuth } from "./contexts/authContext";
 import { useJoinDocumentFromUrl } from "./hooks/useJoinDocumentFromUrl.ts";
+import { useImageUpload } from "./hooks/useImageUpload";
 
 const COLLAB_COLORS = [
   "#e03131",
@@ -44,19 +45,7 @@ const getColorByName = (name: string) => {
 
 const App: React.FC = () => {
   const { user } = useAuth();
-
-  const uploadFile = useCallback(async (file: File) => {
-    const body = new FormData();
-    body.append("file", file);
-    const ret = await fetch("https://tmpfiles.org/api/v1/upload", {
-      method: "POST",
-      body: body,
-    });
-    return (await ret.json()).data.url.replace(
-      "tmpfiles.org/",
-      "tmpfiles.org/dl/",
-    );
-  }, []);
+  const { uploadFile } = useImageUpload();
 
   const { i18n, ready, t } = useTranslation();
   const [lang, setLang] = useState(i18n.language);
