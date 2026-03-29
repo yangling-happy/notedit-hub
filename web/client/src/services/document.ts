@@ -42,3 +42,13 @@ export const deleteDocument = async (id: string) => {
   const response = await apiClient.delete(`/api/documents/${id}`);
   return response.data;
 };
+
+export const createShareLink = async (id: string) => {
+  const response = await apiClient.post(`/api/documents/${id}/share-link`);
+  return response.data;
+};
+
+export const joinDocument = async (id: string) => {
+  const response = await apiClient.post(`/api/documents/${id}/join`);
+  return response.data;
+};

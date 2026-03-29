@@ -19,6 +19,7 @@ import "@blocknote/xl-ai/style.css";
 import { EditorProvider } from "./contexts/editorContext";
 import { useCollaboration } from "./hooks/useCollaboration";
 import { useAuth } from "./contexts/authContext";
+import { useJoinDocumentFromUrl } from "./hooks/useJoinDocumentFromUrl.ts";
 
 const COLLAB_COLORS = [
   "#e03131",
@@ -63,11 +64,11 @@ const App: React.FC = () => {
   const { docId } = useParams<{ docId: string }>();
   const userName = user?.username ?? t("user.default_name");
   const userColor = useMemo(() => getColorByName(userName), [userName]);
-
   const docIdRef = useRef(docId);
   useEffect(() => {
     docIdRef.current = docId;
   }, [docId]);
+  useJoinDocumentFromUrl();
 
   useEffect(() => {
     if (ready) setLang(i18n.language);

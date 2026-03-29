@@ -31,11 +31,21 @@
     "export_markdown": "Markdown",
     "save": "保存",
     "create": "新建",
-    "delete": "删除"
+    "delete": "删除",
+    "share": "分享",
+    "share_no_document": "请先打开一个文档再分享",
+    "share_failed": "生成分享链接失败",
+    "share_copied": "分享链接已复制",
+    "share_copy_failed": "复制链接失败",
+    "share_modal_title": "分享协同链接",
+    "share_modal_tip": "把这个链接发给其他用户，对方打开并登录后即可协同编辑。",
+    "share_copy_link": "复制链接"
   },
   "modal": {
     "new_document_confirm": "新建文档会清空当前编辑，请确认您已导出或已有备份，是否继续？",
     "delete_document_confirm": "删除后不可恢复，是否确认删除当前文档？",
+    "delete_owner_only_title": "无法删除协同文档",
+    "delete_owner_only_content": "只有文档创建者才允许删除该文档。",
     "confirm": "确认",
     "cancel": "取消"
   },

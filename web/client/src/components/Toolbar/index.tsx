@@ -7,6 +7,7 @@ import { CreateButton } from "./create";
 import { DeleteButton } from "./delete";
 import { useEditor } from "../../contexts/editorContext";
 import { UserMenu } from "./user";
+import { ShareButton } from "./share";
 
 export const Toolbar = () => {
   const editor = useEditor();
@@ -30,6 +31,7 @@ export const Toolbar = () => {
         <File editor={editor} />
         <CreateButton />
         <DeleteButton />
+        <ShareButton />
       </div>
 
       <div

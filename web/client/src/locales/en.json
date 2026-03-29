@@ -31,11 +31,21 @@
     "export_markdown": "Markdown",
     "save": "Save",
     "create": "Create",
-    "delete": "Delete"
+    "delete": "Delete",
+    "share": "Share",
+    "share_no_document": "Open a document before sharing",
+    "share_failed": "Failed to generate share link",
+    "share_copied": "Share link copied",
+    "share_copy_failed": "Failed to copy link",
+    "share_modal_title": "Share collaboration link",
+    "share_modal_tip": "Send this URL to others. They can collaborate after opening it and signing in.",
+    "share_copy_link": "Copy link"
   },
   "modal": {
     "new_document_confirm": "Creating a new document will clear the current edit. Please confirm you have exported or backed up. Continue?",
     "delete_document_confirm": "This action cannot be undone. Delete the current document?",
+    "delete_owner_only_title": "Cannot delete collaborative document",
+    "delete_owner_only_content": "Only the original document creator is allowed to delete this document.",
     "confirm": "Confirm",
     "cancel": "Cancel"
   },

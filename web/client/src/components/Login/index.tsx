@@ -10,7 +10,7 @@ import {
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import { useAuth } from "../../contexts/authContext";
 import { loginApi, registerApi } from "../../services/auth";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -26,9 +26,14 @@ export const LoginPage = () => {
   const { t } = useTranslation();
   const { login } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
   const [loading, setLoading] = useState(false);
   const [mode, setMode] = useState<"login" | "register">("login");
   const [form] = Form.useForm<LoginFormValues>();
+
+  const state = location.state as { from?: string } | null;
+  const redirectTo =
+    state?.from && state.from.startsWith("/") ? state.from : "/wiki";
 
   const onFinish = async (values: LoginFormValues) => {
     setLoading(true);
@@ -47,7 +52,7 @@ export const LoginPage = () => {
           ? t("auth.login_success")
           : t("auth.register_success_auto_login"),
       );
-      navigate("/wiki", { replace: true });
+      navigate(redirectTo, { replace: true });
     } catch (err: any) {
       message.error(
         err.response?.data?.message ||
