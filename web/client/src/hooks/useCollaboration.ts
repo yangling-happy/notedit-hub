@@ -51,6 +51,12 @@ export const useCollaboration = ({
     isCollaborationEnabled ? "connecting" : "disabled",
   );
 
+  const mapStatus = (nextStatus?: string): CollaborationStatus => {
+    if (nextStatus === "connected") return "connected";
+    if (nextStatus === "disconnected") return "disconnected";
+    return "connecting";
+  };
+
   const { provider, ydoc } = useMemo(() => {
     if (!isCollaborationEnabled || !docId) {
       return { provider: null, ydoc: null };
@@ -62,6 +68,15 @@ export const useCollaboration = ({
       // 文档名只保留业务 docId，路径由 url 决定。
       name: docId,
       document: ydoc,
+      onConnect: () => {
+        setStatus("connected");
+      },
+      onDisconnect: () => {
+        setStatus("disconnected");
+      },
+      onStatus: ({ status: nextStatus }) => {
+        setStatus(mapStatus(nextStatus));
+      },
     });
 
     return { provider, ydoc };
@@ -98,27 +113,9 @@ export const useCollaboration = ({
 
     setStatus("connecting");
 
-    const handleStatus = (event: { status?: string }) => {
-      if (event.status === "connected") {
-        setStatus("connected");
-      } else if (event.status === "disconnected") {
-        setStatus("disconnected");
-      } else {
-        setStatus("connecting");
-      }
-    };
-
-    provider.on("status", handleStatus as any);
-
-    const handleDisconnect = () => {
-      setStatus("disconnected");
-    };
-
-    provider.on("disconnect", handleDisconnect as any);
+    void provider.configuration.websocketProvider.connect();
 
     return () => {
-      provider.off("status", handleStatus as any);
-      provider.off("disconnect", handleDisconnect as any);
       provider.destroy();
       ydoc.destroy();
     };
