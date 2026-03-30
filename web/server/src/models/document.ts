@@ -5,6 +5,8 @@ export interface IDocument extends Document {
   title: string;
   content: any;
   owner: Types.ObjectId;
+  yjsState?: Buffer;
+  yjsStateUpdatedAt?: Date;
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -14,6 +16,8 @@ const DocumentSchema: Schema = new Schema(
     title: { type: String, default: "Untitled" },
     content: { type: Schema.Types.Mixed },
     owner: { type: Schema.Types.ObjectId, ref: "User", required: true },
+    yjsState: { type: Buffer },
+    yjsStateUpdatedAt: { type: Date },
   },
   {
     timestamps: true,

@@ -68,10 +68,14 @@ export const useCollaboration = ({
       // 文档名只保留业务 docId，路径由 url 决定。
       name: docId,
       document: ydoc,
+      token: () => localStorage.getItem("token") || "",
       onConnect: () => {
         setStatus("connected");
       },
       onDisconnect: () => {
+        setStatus("disconnected");
+      },
+      onAuthenticationFailed: () => {
         setStatus("disconnected");
       },
       onStatus: ({ status: nextStatus }) => {

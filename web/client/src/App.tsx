@@ -115,6 +115,7 @@ const App: React.FC = () => {
     userColor,
     editorOptions,
   });
+  const isCollaborationEnabled = Boolean(docId);
 
   useEffect(() => {
     if (editor && docId) editor.focus();
@@ -123,6 +124,10 @@ const App: React.FC = () => {
   // 当 docId 或 editor 变化时，从 API 加载文档内容
   useEffect(() => {
     if (!editor) return;
+
+    // 协同模式下由 Yjs/Hocuspocus 负责文档状态同步，避免 REST 全量覆盖引发冲突。
+    if (isCollaborationEnabled) return;
+
     if (!docId) {
       // 无文档时清空编辑器
       try {
@@ -146,7 +151,7 @@ const App: React.FC = () => {
     return () => {
       cancelled = true;
     };
-  }, [docId, editor]);
+  }, [docId, editor, isCollaborationEnabled]);
 
   // 防抖保存：编辑 1s 后自动同步到 MongoDB
   const saveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
