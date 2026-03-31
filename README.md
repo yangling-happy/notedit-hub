@@ -53,8 +53,7 @@ The project solves a common workflow pain point: teams want docs + collaboration
 
 <div align="center">
   <picture>
-    <!-- 替换为你的项目截图 -->
-    <img width="80%" src="./web/images/NOTEDIT_Screenshot1.png" alt="NOTEDIT Screenshot 1">
+    ![Product Screenshot 1][image-screenshot-1]
   </picture>
 </div>
 
@@ -245,6 +244,7 @@ ISC © NOTEDIT
 [docs-link]: https://github.com/yangling-happy/notedit-hub#readme
 [issues-link]: https://github.com/yangling-happy/notedit-hub/issues
 [image-banner]: ./web/images/image-banner.png
+[image-screenshot-1]: ./web/images/NOTEDIT_Screenshot1.png
 [image-screenshot-2]: ./web/images/NOTEDIT_Screenshot2.png
 [image-screenshot-3]: ./web/images/NOTEDIT_Screenshot3.png
 [image-feature-realtime]: ./web/images/Realtime+Collaboration1.png
