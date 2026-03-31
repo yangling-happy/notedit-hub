@@ -51,12 +51,8 @@
 >
 > **欢迎 Star** - 你的支持会让项目持续迭代！
 
-<div align="center">
-	<picture>
-		![产品截图 1][image-screenshot-1]
-	</picture>
-</div>
 
+![产品截图 1][image-screenshot-1]
 ![产品截图 2][image-screenshot-2]
 ![产品截图 3][image-screenshot-3]
 
