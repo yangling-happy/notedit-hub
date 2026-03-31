@@ -54,9 +54,12 @@ The project solves a common workflow pain point: teams want docs + collaboration
 <div align="center">
   <picture>
     <!-- 替换为你的项目截图 -->
-    <img width="80%" src="https://via.placeholder.com/1200x560?text=NotEdit+Screenshot" alt="NOTEDIT Screenshot">
+    <img width="80%" src="./web/images/NOTEDIT_Screenshot1.png" alt="NOTEDIT Screenshot 1">
   </picture>
 </div>
+
+![Product Screenshot 2][image-screenshot-2]
+![Product Screenshot 3][image-screenshot-3]
 
 ---
 
@@ -68,7 +71,8 @@ Edit the same document together in real time. Presence status and conflict-free 
 
 <!-- 替换为协作功能演示图 -->
 
-![Feature Demo](https://via.placeholder.com/900x420?text=Realtime+Collaboration+Demo)
+![Feature Demo][image-feature-realtime]
+![Feature Demo 2][image-feature-realtime-2]
 
 <div align="right">
 
@@ -84,7 +88,10 @@ Integrated AI chat and editing flow with streaming output. Great for drafting, r
 
 <!-- 替换为AI功能演示图 -->
 
-![Feature Demo](https://via.placeholder.com/900x420?text=AI+Assistant+Demo)
+![Feature Demo][image-feature-ai]
+![Feature Demo 2][image-feature-ai-2]
+![Feature Demo 3][image-feature-ai-3]
+![Feature Demo 4][image-feature-ai-4]
 
 > [!TIP]
 >
@@ -113,7 +120,8 @@ const { editor, status } = useCollaboration({
 
 <!-- 替换为编辑/导出功能演示图 -->
 
-![Feature Demo](https://via.placeholder.com/900x420?text=Export+and+Sharing+Demo)
+![Feature Demo][image-feature-export]
+![Feature Demo 2][image-feature-export-2]
 
 <div align="right">
 
@@ -236,5 +244,15 @@ ISC © NOTEDIT
 [project-link]: https://github.com/yangling-happy/notedit-hub
 [docs-link]: https://github.com/yangling-happy/notedit-hub#readme
 [issues-link]: https://github.com/yangling-happy/notedit-hub/issues
-[image-banner]: https://via.placeholder.com/1280x640?text=NOTEDIT+Banner
+[image-banner]: ./web/images/image-banner.png
+[image-screenshot-2]: ./web/images/NOTEDIT_Screenshot2.png
+[image-screenshot-3]: ./web/images/NOTEDIT_Screenshot3.png
+[image-feature-realtime]: ./web/images/Realtime+Collaboration1.png
+[image-feature-realtime-2]: ./web/images/Realtime+Collaboration2.png
+[image-feature-ai]: ./web/images/AI+Assistant1.png
+[image-feature-ai-2]: ./web/images/AI+Assistant2.png
+[image-feature-ai-3]: ./web/images/AI+Assistant3.png
+[image-feature-ai-4]: ./web/images/AI+Assistant4.png
+[image-feature-export]: ./web/images/Export1.png
+[image-feature-export-2]: ./web/images/Export2.png
 [back-to-top]: https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square
