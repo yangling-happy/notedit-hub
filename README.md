@@ -51,12 +51,8 @@ The project solves a common workflow pain point: teams want docs + collaboration
 >
 > **Star Us** - Your support helps us continue improving!
 
-<div align="center">
-  <picture>
-    ![Product Screenshot 1][image-screenshot-1]
-  </picture>
-</div>
 
+![Product Screenshot 1][image-screenshot-1]
 ![Product Screenshot 2][image-screenshot-2]
 ![Product Screenshot 3][image-screenshot-3]
 
