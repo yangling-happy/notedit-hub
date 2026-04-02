@@ -1,0 +1,10 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "entryPoints": ["src/hooks/useCollaboration.ts"],
+  "out": "docs/api",
+  "tsconfig": "tsconfig.json",
+  "name": "NOTEDIT useCollaboration API Documentation",
+  "includeVersion": true,
+  "cleanOutputDir": true,
+  "help": false
+}
