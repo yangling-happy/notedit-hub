@@ -165,15 +165,13 @@ VITE_COLLAB_WS_URL=ws://localhost:3001
 ### 3) Start backend
 
 ```bash
-cd web/server
-pnpm dev
+pnpm dev:server
 ```
 
 ### 4) Start frontend
 
 ```bash
-cd web/client
-pnpm dev
+pnpm dev:client
 ```
 
 Frontend default: `http://localhost:5173`  

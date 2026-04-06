@@ -51,7 +51,6 @@
 >
 > **欢迎 Star** - 你的支持会让项目持续迭代！
 
-
 ![产品截图 1][image-screenshot-1]
 ![产品截图 2][image-screenshot-2]
 ![产品截图 3][image-screenshot-3]
@@ -165,15 +164,13 @@ VITE_COLLAB_WS_URL=ws://localhost:3001
 ### 3) 启动后端
 
 ```bash
-cd web/server
-pnpm dev
+pnpm dev:server
 ```
 
 ### 4) 启动前端
 
 ```bash
-cd web/client
-pnpm dev
+pnpm dev:client
 ```
 
 前端默认地址：`http://localhost:5173`  
