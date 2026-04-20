@@ -1,7 +1,12 @@
+import type { SegmentedProps } from "antd";
 import { Segmented } from "antd";
 import { useTranslation } from "react-i18next";
 
-export const LanguageSwitcher = () => {
+type LanguageSwitcherProps = {
+  size?: SegmentedProps["size"];
+};
+
+export const LanguageSwitcher = ({ size = "middle" }: LanguageSwitcherProps) => {
   const { i18n, t } = useTranslation();
 
   const currentLang = i18n.language?.startsWith("en") ? "en" : "zh";
@@ -12,6 +17,7 @@ export const LanguageSwitcher = () => {
 
   return (
     <Segmented
+      size={size}
       value={currentLang}
       onChange={handleLangChange}
       options={[

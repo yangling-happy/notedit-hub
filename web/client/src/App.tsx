@@ -7,7 +7,6 @@ import { Footbar } from "./components/Footbar";
 import "./styles/global.css";
 import { en, zh } from "@blocknote/core/locales";
 import { useEffect, useState, useCallback, useRef, useMemo } from "react";
-import { ThemeBridge } from "./components/themeBridge";
 import { useTranslation } from "react-i18next";
 import "./locales/i18.ts";
 import { useParams } from "react-router-dom";
@@ -21,6 +20,7 @@ import { useCollaboration } from "./hooks/useCollaboration";
 import { useAuth } from "./contexts/authContext";
 import { useJoinDocumentFromUrl } from "./hooks/useJoinDocumentFromUrl.ts";
 import { useImageUpload } from "./hooks/useImageUpload";
+import { SessionLoading } from "./components/marketing/SessionLoading";
 
 const COLLAB_COLORS = [
   "#e03131",
@@ -132,7 +132,9 @@ const App: React.FC = () => {
       // 无文档时清空编辑器
       try {
         editor.replaceBlocks(editor.document, [{ type: "paragraph" }]);
-      } catch (_) {}
+      } catch {
+        void 0;
+      }
       return;
     }
     let cancelled = false; //竞态条件：如果在 fetch 过程中 docId 发生变化，或者组件卸载了，就不再执行 setState
@@ -145,7 +147,9 @@ const App: React.FC = () => {
             : [{ type: "paragraph" }];
         try {
           editor.replaceBlocks(editor.document, content);
-        } catch (_) {}
+        } catch {
+          void 0;
+        }
       })
       .catch(() => {});
     return () => {
@@ -159,7 +163,7 @@ const App: React.FC = () => {
     (note: {
       id: string;
       title: string;
-      content: any[];
+      content: Record<string, unknown>[];
       updatedAt: number;
     }) => {
       const currentDocId = docIdRef.current;
@@ -175,11 +179,10 @@ const App: React.FC = () => {
     [],
   );
 
-  if (!ready) return <div>{t("common.loading")}</div>;
+  if (!ready) return <SessionLoading />;
 
   return (
-    <ThemeBridge>
-      <EditorProvider editor={editor}>
+    <EditorProvider editor={editor}>
         <div className="fixed-viewport">
           <Toolbar />
           <Splitter
@@ -222,8 +225,7 @@ const App: React.FC = () => {
             </Splitter.Panel>
           </Splitter>
         </div>
-      </EditorProvider>
-    </ThemeBridge>
+    </EditorProvider>
   );
 };
 

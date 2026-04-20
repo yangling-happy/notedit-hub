@@ -1,4 +1,5 @@
 import File from "./file";
+import { NOTEDIT_GITHUB_URL } from "../../constants/links";
 import { GithubOutlined } from "@ant-design/icons";
 import { ModeToggle } from "./modeToogle";
 import { SearchPanel } from "./search";
@@ -58,7 +59,7 @@ export const Toolbar = () => {
         <LanguageSwitcher />
         <ModeToggle />
         <a
-          href="https://github.com/yangling-happy/notedit-hub"
+          href={NOTEDIT_GITHUB_URL}
           target="_blank"
           rel="noopener noreferrer"
           style={{

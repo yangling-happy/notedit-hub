@@ -8,11 +8,15 @@ import {
   Segmented,
 } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
+import axios from "axios";
 import { useAuth } from "../../contexts/authContext";
 import { loginApi, registerApi } from "../../services/auth";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { motion } from "motion/react";
+import { MarketingShell } from "../marketing/MarketingShell";
+import { usePrefersReducedMotion } from "../marketing/usePrefersReducedMotion";
 
 const { Title } = Typography;
 
@@ -24,6 +28,7 @@ interface LoginFormValues {
 
 export const LoginPage = () => {
   const { t } = useTranslation();
+  const reduced = usePrefersReducedMotion();
   const { login } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
@@ -53,9 +58,12 @@ export const LoginPage = () => {
           : t("auth.register_success_auto_login"),
       );
       navigate(redirectTo, { replace: true });
-    } catch (err: any) {
+    } catch (err: unknown) {
+      const serverMsg = axios.isAxiosError(err)
+        ? (err.response?.data as { message?: string } | undefined)?.message
+        : undefined;
       message.error(
-        err.response?.data?.message ||
+        serverMsg ||
           (mode === "login"
             ? t("auth.login_failed_check_credentials")
             : t("auth.register_failed_try_later")),
@@ -66,22 +74,27 @@ export const LoginPage = () => {
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        height: "100vh",
-        backgroundColor: "#f5f5f5",
-      }}
-    >
-      <Card
-        style={{
-          width: 360,
-          boxShadow: "0 4px 12px rgba(0,0,0,0.05)",
-          borderRadius: "8px",
-        }}
-      >
+    <MarketingShell variant="auth">
+      <div className="marketing-auth-panel">
+        <motion.div
+          initial={{ opacity: 0, y: reduced ? 0 : 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{
+            duration: reduced ? 0 : 0.4,
+            ease: [0.22, 1, 0.36, 1],
+          }}
+        >
+          <Card
+            style={{
+              width: "100%",
+              maxWidth: 360,
+              margin: "0 auto",
+              borderRadius: 16,
+              border: "1px solid var(--marketing-border, rgba(0,0,0,0.06))",
+              boxShadow: "0 4px 24px rgba(0,0,0,0.06)",
+              background: "var(--marketing-card-bg, rgba(255,255,255,0.72))",
+            }}
+          >
         <div style={{ textAlign: "center", marginBottom: 32 }}>
           <Title
             level={3}
@@ -190,7 +203,9 @@ export const LoginPage = () => {
             </Button>
           </Form.Item>
         </Form>
-      </Card>
-    </div>
+          </Card>
+        </motion.div>
+      </div>
+    </MarketingShell>
   );
 };

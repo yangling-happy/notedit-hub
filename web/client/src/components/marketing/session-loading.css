@@ -1,0 +1,135 @@
+.session-loading-root {
+  --sl-bg: #fafafa;
+  --sl-fg: rgba(0, 0, 0, 0.88);
+  --sl-bar-bg: rgba(0, 0, 0, 0.08);
+  --sl-bar-fg: rgba(0, 0, 0, 0.85);
+  --sl-top-shine: rgba(0, 0, 0, 0.35);
+
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--sl-bg);
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    sans-serif;
+}
+
+.session-loading-root--dark {
+  --sl-bg: #0a0a0b;
+  --sl-fg: rgba(255, 255, 255, 0.92);
+  --sl-bar-bg: rgba(255, 255, 255, 0.1);
+  --sl-bar-fg: rgba(255, 255, 255, 0.88);
+  --sl-top-shine: rgba(255, 255, 255, 0.45);
+}
+
+.session-loading-topbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  overflow: hidden;
+  z-index: 10000;
+}
+
+.session-loading-topbar-inner {
+  height: 100%;
+  width: 40%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--sl-top-shine),
+    transparent
+  );
+  animation: session-loading-top-sweep 1.35s ease-in-out infinite;
+}
+
+@keyframes session-loading-top-sweep {
+  0% {
+    transform: translateX(-120%);
+  }
+  100% {
+    transform: translateX(320%);
+  }
+}
+
+.session-loading-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.session-loading-logo.marketing-logo-mark {
+  --marketing-text: var(--sl-fg);
+  color: var(--sl-fg);
+}
+
+.session-loading-track {
+  position: fixed;
+  bottom: 22%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(220px, 70vw);
+  height: 3px;
+  border-radius: 999px;
+  background: var(--sl-bar-bg);
+  overflow: hidden;
+}
+
+.session-loading-fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 45%;
+  border-radius: inherit;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--sl-bar-fg),
+    transparent
+  );
+  background-size: 200% 100%;
+  animation: session-loading-fill-sweep 1.8s ease-in-out infinite;
+  box-shadow: 0 0 18px rgba(128, 128, 128, 0.25);
+}
+
+@keyframes session-loading-fill-sweep {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(260%);
+    opacity: 0.65;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .session-loading-topbar-inner {
+    animation: none;
+    width: 100%;
+    opacity: 0.4;
+    transform: none;
+  }
+
+  .session-loading-fill {
+    animation: none;
+    transform: none;
+    width: 36%;
+    left: 32%;
+    opacity: 0.6;
+  }
+}

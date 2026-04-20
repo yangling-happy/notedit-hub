@@ -24,7 +24,7 @@ interface EditorProps {
   onSave?: (data: {
     id: string;
     title: string;
-    content: any;
+    content: Record<string, unknown>[];
     updatedAt: number;
   }) => void;
   noteId?: string;
