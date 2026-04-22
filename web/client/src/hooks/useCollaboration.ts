@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import * as Y from "yjs";
-import { HocuspocusProvider } from "@hocuspocus/provider";
+import { HocuspocusProvider, WebSocketStatus } from "@hocuspocus/provider";
 import { useCreateBlockNote } from "@blocknote/react";
 import i18n from "../locales/i18";
 
@@ -10,14 +10,14 @@ import i18n from "../locales/i18";
  */
 export type CollaborationStatus =
   | "disabled" // 协作功能关闭
-  | "connecting" // 正在建立 WebSocket 连接
-  | "connected" // 已成功连接并同步数据
+  | "connecting" // 正在建立连接或等待 Yjs 首次同步
+  | "connected" // WebSocket 已建立且 Yjs 已与服务器完成同步
   | "disconnected"; // 连接已断开或认证失败
 
 /**
  * `useCollaboration` Hook 的配置选项
  */
-interface CollaborationOptions {
+interface UseCollaborationOptions {
   /** * 文档唯一标识符
    * @remarks
    * 这是开启协作的关键。如果传入 `undefined` 或空字符串，
@@ -31,6 +31,11 @@ interface CollaborationOptions {
   /** 传递给 BlockNote 的原始配置项 */
   editorOptions?: Parameters<typeof useCreateBlockNote>[0];
 }
+
+type BlockNoteOptions = NonNullable<Parameters<typeof useCreateBlockNote>[0]>;
+type BlockNoteCollaborationOptions = NonNullable<
+  BlockNoteOptions["collaboration"]
+>;
 
 /**
  * 内部辅助函数：根据环境变量获取并格式化协作服务器的 WebSocket URL
@@ -59,9 +64,12 @@ const getCollabWsUrl = () => {
   return "ws://localhost:3001";
 };
 
+/** 短暂断线防抖，避免底栏在重连抖动时误判为已断开 */
+const DISCONNECT_DEBOUNCE_MS = 480;
+
 /**
  * 处理编辑器协作逻辑的自定义 Hook
- * * @param options - 协作配置项 {@link CollaborationOptions}
+ * * @param options - 协作配置项 {@link UseCollaborationOptions}
  * * @remarks
  * **协作开关逻辑说明：**
  * 该 Hook 会自动检测 `docId` 的有效性：
@@ -81,33 +89,47 @@ export const useCollaboration = ({
   userName = i18n.t("user.default_name"),
   userColor = "#ffcc00",
   editorOptions,
-}: CollaborationOptions) => {
-  /** 标识协作功能是否激活 */
+}: UseCollaborationOptions) => {
   const isCollaborationEnabled = Boolean(docId);
 
-  const [status, setStatus] = useState<CollaborationStatus>(
-    isCollaborationEnabled ? "connecting" : "disabled",
-  );
+  const [bundle, setBundle] = useState<{
+    ydoc: Y.Doc;
+    provider: HocuspocusProvider;
+  } | null>(null);
 
-  /**
-   * 将 Hocuspocus 内部状态映射为业务状态
-   * @param nextStatus - Hocuspocus 提供的原始状态
-   */
-  const mapStatus = (nextStatus?: string): CollaborationStatus => {
-    if (nextStatus === "connected") return "connected";
-    if (nextStatus === "disconnected") return "disconnected";
-    return "connecting";
-  };
+  /** 有 docId 时的连接态；无 docId 时由 {@link status} 派生为 disabled */
+  const [connStatus, setConnStatus] =
+    useState<Exclude<CollaborationStatus, "disabled">>("connecting");
 
-  /**
-   * 初始化 Yjs 文档和 Hocuspocus Provider
-   * @remarks
-   * 仅在 `isCollaborationEnabled` 为 true 时才会实例化
-   */
-  const { provider, ydoc } = useMemo(() => {
-    if (!isCollaborationEnabled || !docId) {
-      return { provider: null, ydoc: null };
+  const status: CollaborationStatus = docId ? connStatus : "disabled";
+
+  useEffect(() => {
+    if (!docId) {
+      return;
     }
+
+    // 与 Hocuspocus 会话对齐：切换 docId 时必须立刻回到「连接/同步中」，不能沿用上一文档的 connected/disconnected
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- 外部连接生命周期与 React 状态同步
+    setConnStatus("connecting");
+
+    let cancelled = false;
+    let disconnectTimer: ReturnType<typeof setTimeout> | null = null;
+
+    const clearDisconnectTimer = () => {
+      if (disconnectTimer) {
+        clearTimeout(disconnectTimer);
+        disconnectTimer = null;
+      }
+    };
+
+    const scheduleDisconnected = () => {
+      clearDisconnectTimer();
+      disconnectTimer = setTimeout(() => {
+        disconnectTimer = null;
+        if (cancelled) return;
+        setConnStatus("disconnected");
+      }, DISCONNECT_DEBOUNCE_MS);
+    };
 
     const ydoc = new Y.Doc();
     const provider = new HocuspocusProvider({
@@ -115,37 +137,65 @@ export const useCollaboration = ({
       name: docId,
       document: ydoc,
       token: () => localStorage.getItem("token") || "",
-      onConnect: () => setStatus("connected"),
-      onDisconnect: () => setStatus("disconnected"),
-      onAuthenticationFailed: () => setStatus("disconnected"),
-      onStatus: ({ status: nextStatus }) => {
-        setStatus(mapStatus(nextStatus));
+      onSynced: ({ state }) => {
+        if (cancelled || !state) return;
+        clearDisconnectTimer();
+        setConnStatus("connected");
+      },
+      onStatus: ({ status: wsStatus }) => {
+        if (cancelled) return;
+        if (wsStatus === WebSocketStatus.Disconnected) {
+          scheduleDisconnected();
+          return;
+        }
+        clearDisconnectTimer();
+        if (wsStatus === WebSocketStatus.Connecting) {
+          setConnStatus("connecting");
+          return;
+        }
+        if (wsStatus === WebSocketStatus.Connected) {
+          // WebSocket 已就绪，但 Yjs 可能尚未收到 Sync Step2；以 provider.synced / onSynced 为准
+          setConnStatus(provider.synced ? "connected" : "connecting");
+        }
+      },
+      onDisconnect: () => {
+        if (cancelled) return;
+        scheduleDisconnected();
+      },
+      onAuthenticationFailed: () => {
+        if (cancelled) return;
+        clearDisconnectTimer();
+        setConnStatus("disconnected");
       },
     });
 
-    return { provider, ydoc };
-  }, [docId, isCollaborationEnabled]);
+    setBundle({ ydoc, provider });
+    void provider.configuration.websocketProvider.connect();
 
-  /**
-   * 组装 BlockNote 协作插件所需的配置对象
-   */
+    return () => {
+      cancelled = true;
+      clearDisconnectTimer();
+      provider.destroy();
+      ydoc.destroy();
+      setBundle(null);
+    };
+  }, [docId]);
+
   const collaborationConfig = useMemo(() => {
-    if (!provider || !ydoc || !isCollaborationEnabled) return undefined;
+    if (!bundle || !docId || !isCollaborationEnabled) return undefined;
 
     return {
-      provider: provider as any,
-      fragment: ydoc.getXmlFragment("blocknote"),
+      provider: bundle.provider as NonNullable<
+        BlockNoteCollaborationOptions["provider"]
+      >,
+      fragment: bundle.ydoc.getXmlFragment("blocknote"),
       user: {
         name: userName,
         color: userColor,
       },
     };
-  }, [provider, ydoc, userName, userColor, isCollaborationEnabled]);
+  }, [bundle, docId, userName, userColor, isCollaborationEnabled]);
 
-  /**
-   * 创建 BlockNote 实例
-   * 将协作配置注入到编辑器配置中
-   */
   const editor = useCreateBlockNote(
     {
       ...(editorOptions ?? {}),
@@ -153,27 +203,6 @@ export const useCollaboration = ({
     },
     [editorOptions, collaborationConfig, docId, userName, userColor],
   );
-
-  /**
-   * 生命周期管理
-   * 负责连接的建立和销毁清理
-   */
-  useEffect(() => {
-    if (!isCollaborationEnabled) {
-      setStatus("disabled");
-      return;
-    }
-
-    if (!provider || !ydoc) return;
-
-    setStatus("connecting");
-    void provider.configuration.websocketProvider.connect();
-
-    return () => {
-      provider.destroy();
-      ydoc.destroy();
-    };
-  }, [provider, ydoc, isCollaborationEnabled]);
 
   return { editor, status };
 };

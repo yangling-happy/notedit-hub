@@ -170,61 +170,62 @@ const App: React.FC = () => {
       if (!currentDocId) return;
       if (saveTimerRef.current) clearTimeout(saveTimerRef.current);
       saveTimerRef.current = setTimeout(() => {
-        updateDocument(currentDocId, {
-          title: note.title,
-          content: note.content,
-        }).catch(() => {});
+        const payload = isCollaborationEnabled
+          ? { title: note.title }
+          : { title: note.title, content: note.content };
+
+        updateDocument(currentDocId, payload).catch(() => {});
       }, 1000);
     },
-    [],
+    [isCollaborationEnabled],
   );
 
   if (!ready) return <SessionLoading />;
 
   return (
     <EditorProvider editor={editor}>
-        <div className="fixed-viewport">
-          <Toolbar />
-          <Splitter
-            style={{ flex: 1, height: "calc(100% - 48px)", overflow: "hidden" }}
+      <div className="fixed-viewport">
+        <Toolbar />
+        <Splitter
+          style={{ flex: 1, height: "calc(100% - 48px)", overflow: "hidden" }}
+        >
+          <Splitter.Panel
+            className="sidebar-container sidebar-trigger"
+            style={{ overflow: "hidden" }}
+            collapsible={{ start: true, end: true }}
           >
-            <Splitter.Panel
-              className="sidebar-container sidebar-trigger"
-              style={{ overflow: "hidden" }}
-              collapsible={{ start: true, end: true }}
-            >
-              <div className="sidebar-hidden sidebar-scrollable">
-                <Sidebar />
-              </div>
-            </Splitter.Panel>
-            <Splitter.Panel
-              className="main-content"
-              min="20%"
-              defaultSize="80%"
+            <div className="sidebar-hidden sidebar-scrollable">
+              <Sidebar />
+            </div>
+          </Splitter.Panel>
+          <Splitter.Panel
+            className="main-content"
+            min="20%"
+            defaultSize="80%"
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              overflow: "hidden",
+            }}
+          >
+            <div
+              className="main-content-scrollable"
               style={{
-                display: "flex",
-                flexDirection: "column",
-                overflow: "hidden",
+                padding: docId ? "15px 20px" : "0",
+                flex: 1,
+                overflow: "auto",
               }}
             >
-              <div
-                className="main-content-scrollable"
-                style={{
-                  padding: docId ? "15px 20px" : "0",
-                  flex: 1,
-                  overflow: "auto",
-                }}
-              >
-                <Editor
-                  key={lang}
-                  onSave={handleSave}
-                  noteId={docId ?? undefined}
-                />
-              </div>
-              {docId && <Footbar collaborationStatus={collaborationStatus} />}
-            </Splitter.Panel>
-          </Splitter>
-        </div>
+              <Editor
+                key={lang}
+                onSave={handleSave}
+                noteId={docId ?? undefined}
+              />
+            </div>
+            {docId && <Footbar collaborationStatus={collaborationStatus} />}
+          </Splitter.Panel>
+        </Splitter>
+      </div>
     </EditorProvider>
   );
 };
