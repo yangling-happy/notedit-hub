@@ -1,4 +1,14 @@
 {
+  "pnpm": {
+    "overrides": {
+      "lexical": "0.14.5",
+      "@lexical/selection": "0.14.5",
+      "@lexical/utils": "0.14.5",
+      "@lexical/rich-text": "0.14.5",
+      "@lexical/plain-text": "0.14.5",
+      "@lexical/history": "0.14.5"
+    }
+  },
   "name": "notedit",
   "version": "1.0.0",
   "description": "",
@@ -7,6 +17,7 @@
   "scripts": {
     "dev:client": "pnpm --filter client dev",
     "dev:server": "pnpm --filter server dev",
+    "dev": "concurrently -n \"WEB,API\" -c \"cyan,green\" \"pnpm run dev:client\" \"pnpm run dev:server\"",
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepare": "husky",
     "build": "pnpm -r run build"
@@ -16,6 +27,7 @@
   "license": "ISC",
   "packageManager": "pnpm@10.28.2",
   "devDependencies": {
+    "concurrently": "^9.2.1",
     "husky": "^9.1.7"
   }
 }
