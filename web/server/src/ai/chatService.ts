@@ -37,7 +37,7 @@ export const startChatStream = async ({
     system: systemPrompt,
     messages: modelMessages,
     ...(hasTools ? { tools: tools as any } : {}),
-    ...(hasTools ? { toolChoice: "required" as const, maxSteps: 1 } : {}),
+    ...(hasTools ? { toolChoice: "auto" as const, maxSteps: 1 } : {}),
     onStepFinish: ({ toolCalls, finishReason }) => {
       if (toolCalls?.length) {
         console.log(
