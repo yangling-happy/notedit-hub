@@ -35,3 +35,6 @@ Thumbs.db
 
 /web/server/dist
 /web/server/uploads/
+
+bundle-stats.html
+web/client/bundle-stats.html

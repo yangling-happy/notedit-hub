@@ -27,7 +27,15 @@
   "license": "ISC",
   "packageManager": "pnpm@10.28.2",
   "devDependencies": {
+    "@commitlint/cli": "^21.0.1",
+    "@commitlint/config-conventional": "^21.0.1",
     "concurrently": "^9.2.1",
-    "husky": "^9.1.7"
+    "husky": "^9.1.7",
+    "lint-staged": "^17.0.4"
+  },
+  "lint-staged": {
+    "web/client/**/*.{ts,tsx}": [
+      "pnpm --filter client exec eslint --max-warnings=0 --no-warn-ignored"
+    ]
   }
 }
